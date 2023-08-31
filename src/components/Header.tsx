@@ -19,6 +19,10 @@ const Header = () => {
 		navigation.navigate('Home')
 	}
 
+	const CreateDareMeScreen = () => {
+		navigation.navigate('DareMe-Create')
+	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
@@ -43,7 +47,7 @@ const Header = () => {
 			{isAuthenticated &&
 				<View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 5 }}>
 					<View style={styles.createBtn}>
-						<PrimaryButton text="Create" width={'100%'}>
+						<PrimaryButton text="Create" width={'100%'} onPress={CreateDareMeScreen}>
 							<SvgXml xml={AddIconSvg} />
 						</PrimaryButton>
 					</View>
