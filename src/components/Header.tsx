@@ -2,7 +2,8 @@ import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { PrimaryButton } from "../components/common/Button";
-import { LogoIcon } from "../assets/svg/index.tsx";
+import { SvgXml } from "react-native-svg";
+import { CreatoLogoSvg } from "../assets/svg";
 
 const Header = () => {
 	const navigation = useNavigation();
@@ -14,7 +15,7 @@ const Header = () => {
 	return (
 		<View style={styles.header}>
 			<View style={styles.logo}>
-				<LogoIcon width={40} height={40} />
+				<SvgXml xml={CreatoLogoSvg} />
 				<Text style={styles.logoText}>Creato</Text>
 			</View>
 			<View style={styles.button}>
