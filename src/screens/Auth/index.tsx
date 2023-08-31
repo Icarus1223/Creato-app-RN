@@ -7,8 +7,8 @@ import { GoogleButtonSvg } from '../../assets/svg';
 const AuthScreen = ({ navigation }) => {
 	const { isAuthenticated, login, logout } = useContext(AuthContext);
 
-	if(!isAuthenticated) {
-		//navigation.navigate('Home');
+	const GoogleLogin = () => {
+		login();
 	}
 
 	return (
@@ -17,7 +17,7 @@ const AuthScreen = ({ navigation }) => {
 				<Text style={styles.welcomeText}>Welcome!</Text>
 				<Text style={styles.continueWithText}>Continue With:</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-					<TouchableOpacity style={styles.googleLogin}>
+					<TouchableOpacity style={styles.googleLogin} onPress={GoogleLogin}>
 						<SvgXml xml={GoogleButtonSvg}/>
 					</TouchableOpacity>
 				</View>

@@ -100,3 +100,27 @@ export const GoogleButtonSvg =
       </filter>
     </defs>
   </svg>`
+
+export const DonutIconSvg = 
+  `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <g clip-path="url(#clip0_4401_11155)">
+      <path d="M7.375 6.21134V1.69873C4.25 2.01386 1.75 4.71764 1.75 8.00125C1.75 11.2849 4.25 13.9886 7.375 14.3038V9.79117C6.75 9.53277 6.125 8.83319 6.125 8.00125C6.125 7.16932 6.75 6.46974 7.375 6.21134ZM9.7875 7.371H14.25C13.95 4.3773 11.75 1.99495 8.625 1.69873V6.21134C9.25 6.40041 9.575 6.82898 9.7875 7.371ZM8.625 9.79117V14.3038C11.75 14.0076 13.95 11.6252 14.25 8.63151H9.7875C9.575 9.17352 9.25 9.60209 8.625 9.79117Z" fill="#54504E"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_4401_11155">
+        <rect width="15" height="15.1261" fill="white" transform="translate(0.5 0.437012)"/>
+      </clipPath>
+    </defs>
+  </svg>`
+
+export const AddIconSvg = 
+  `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+    <g clip-path="url(#clip0_4401_11165)">
+      <path d="M18.5 13H13.5V18C13.5 18.55 13.05 19 12.5 19C11.95 19 11.5 18.55 11.5 18V13H6.5C5.95 13 5.5 12.55 5.5 12C5.5 11.45 5.95 11 6.5 11H11.5V6C11.5 5.45 11.95 5 12.5 5C13.05 5 13.5 5.45 13.5 6V11H18.5C19.05 11 19.5 11.45 19.5 12C19.5 12.55 19.05 13 18.5 13Z" fill="white"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_4401_11165">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+      </clipPath>
+    </defs>
+  </svg>`
