@@ -113,14 +113,26 @@ export const DonutIconSvg =
     </defs>
   </svg>`
 
-export const AddIconSvg = 
+export const AddIconSvg = (color) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
     <g clip-path="url(#clip0_4401_11165)">
-      <path d="M18.5 13H13.5V18C13.5 18.55 13.05 19 12.5 19C11.95 19 11.5 18.55 11.5 18V13H6.5C5.95 13 5.5 12.55 5.5 12C5.5 11.45 5.95 11 6.5 11H11.5V6C11.5 5.45 11.95 5 12.5 5C13.05 5 13.5 5.45 13.5 6V11H18.5C19.05 11 19.5 11.45 19.5 12C19.5 12.55 19.05 13 18.5 13Z" fill="white"/>
+      <path d="M18.5 13H13.5V18C13.5 18.55 13.05 19 12.5 19C11.95 19 11.5 18.55 11.5 18V13H6.5C5.95 13 5.5 12.55 5.5 12C5.5 11.45 5.95 11 6.5 11H11.5V6C11.5 5.45 11.95 5 12.5 5C13.05 5 13.5 5.45 13.5 6V11H18.5C19.05 11 19.5 11.45 19.5 12C19.5 12.55 19.05 13 18.5 13Z" fill="${color}"/>
     </g>
     <defs>
       <clipPath id="clip0_4401_11165">
         <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+      </clipPath>
+    </defs>
+  </svg>`
+
+export const EditIconSvg = (color) => 
+  `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <g clip-path="url(#clip0_4484_2265)">
+      <path d="M2.5 14.5501V17.0835C2.5 17.3168 2.68333 17.5001 2.91667 17.5001H5.45C5.55833 17.5001 5.66667 17.4585 5.74167 17.3751L14.8417 8.28346L11.7167 5.15846L2.625 14.2501C2.54167 14.3335 2.5 14.4335 2.5 14.5501ZM17.2583 5.8668C17.5833 5.5418 17.5833 5.0168 17.2583 4.6918L15.3083 2.7418C14.9833 2.4168 14.4583 2.4168 14.1333 2.7418L12.6083 4.2668L15.7333 7.3918L17.2583 5.8668Z" fill="${color}"/>
+    </g>
+    <defs>
+      <clipPath id="clip0_4484_2265">
+        <rect width="20" height="20" fill="white"/>
       </clipPath>
     </defs>
   </svg>`

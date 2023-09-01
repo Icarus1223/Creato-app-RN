@@ -48,7 +48,7 @@ const Header = () => {
 				<View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 5 }}>
 					<View style={styles.createBtn}>
 						<PrimaryButton text="Create" width={'100%'} onPress={CreateDareMeScreen}>
-							<SvgXml xml={AddIconSvg} />
+							<SvgXml xml={AddIconSvg('white')} />
 						</PrimaryButton>
 					</View>
 				</View>

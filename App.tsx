@@ -2,8 +2,10 @@ import * as React from 'react';
 import {SafeAreaView, View, ScrollView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { Provider as ReduxProvider } from "react-redux";
 
 import { AuthProvider } from "./src/utils/AuthContext.tsx";
+import { store } from "./src/redux/store";
 
 import Header from "./src/components/Header";
 import HomeScreen from "./src/screens/Home";
@@ -19,24 +21,26 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <AuthProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <NavigationContainer>
-          <Header />
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false
-            }}
-          >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Auth" component={AuthScreen} />
-            <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
-            <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
-            <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
-    </AuthProvider>
+    <ReduxProvider store={store}>
+      <AuthProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Header />
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false
+              }}
+            >
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Auth" component={AuthScreen} />
+              <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
+              <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
+              <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      </AuthProvider>
+    </ReduxProvider>
   );
 };
 

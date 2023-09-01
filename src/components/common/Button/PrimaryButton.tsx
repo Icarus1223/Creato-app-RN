@@ -1,12 +1,26 @@
 import React from "react";
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 
-const PrimaryButton = ({ text, rounded, onPress, width, children }) => {
+const PrimaryButton = ({ text, rounded, onPress, width, children, outlined, forceColor }) => {
 	return (
-		<TouchableOpacity style={[styles.button, { width: width ? width : undefined, borderRadius: rounded ? 50 : 8 }]} onPress={onPress}>
+		<TouchableOpacity 
+      style={[
+        styles.button, 
+        { 
+          width: width ? width : undefined, 
+          borderRadius: rounded ? 50 : 8,
+          backgroundColor: forceColor ? forceColor : outlined ? '#FFFFFF' : '#EFA058',
+          borderColor: forceColor ? forceColor : '#EFA058'
+        }
+      ]} 
+      onPress={onPress}
+    >
       <View style={styles.buttonContent}>
         {children}
-			  <Text style={styles.buttonText}>{text}</Text>
+			  <Text style={[
+            styles.buttonText,
+            { color: forceColor ? '#FFFFFF' : outlined ? '#EFA058' : '#FFFFFF' }
+          ]}>{text}</Text>
       </View>
 		</TouchableOpacity>
 	);
@@ -14,8 +28,8 @@ const PrimaryButton = ({ text, rounded, onPress, width, children }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#EFA058',
     alignSelf: 'flex-start',
+    borderWidth: 1,
   },
   buttonContent: {
     paddingVertical: 16,
@@ -25,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    color: 'white',
+    marginLeft: 3,
     fontSize: 16,
     lineHeight: 20,
     fontWeight: 500,

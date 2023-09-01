@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_DAREME } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import { BackIconSvg } from "../../../assets/svg";
 import Category from "../../../components/common/Category";
 import Input from "../../../components/common/Input";
 
+const suggests = [
+	{ id: 0, text: 'Previous options from previous DareMe' },
+	{ id: 1, text: 'Second highest Dare from previous DareMe' },
+	{ id: 2, text: 'Previous suggestions from fans' },
+	{ id: 3, text: 'Other suggestions from our database' },
+	{ id: 4, text: 'Other suggestions' }
+]
+
 const CreateDareMeDareOptionScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
+	const { dareme } = useSelector((state) => state.dareme);
 	const [option1, setOption1] = useState('');
 	const [option2, setOption2] = useState('');
 
@@ -15,16 +27,19 @@ const CreateDareMeDareOptionScreen = ({ navigation }) => {
 	}
 
 	const SaveTitle = () => {
-		navigation.navigate('DareMe-Create')
+		navigation.navigate('DareMe-Create');
+		const { options } = dareme;
+		options.option1.title = option1;
+		options.option2.title = option2;
+		dispatch({ type: SET_DAREME, payload: { ...dareme, options: options } });
 	}
 
-	const suggests = [
-		{ id: 0, text: 'Previous options from previous DareMe' },
-		{ id: 1, text: 'Second highest Dare from previous DareMe' },
-		{ id: 2, text: 'Previous suggestions from fans' },
-		{ id: 3, text: 'Other suggestions from our database' },
-		{ id: 4, text: 'Other suggestions' }
-	]
+	useEffect(() => {
+		const { options } = dareme;
+		const { option1, option2 } = options;
+		if(option1.title) setOption1(option1.title);
+		if(option2.title) setOption2(option2.title);
+	}, [dareme]);
 
 	return (
 		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>

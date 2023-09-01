@@ -1,0 +1,1 @@
+export const SET_DAREME = 'SET_DAREME';

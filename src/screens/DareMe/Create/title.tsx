@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_DAREME } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import { BackIconSvg } from "../../../assets/svg";
 import Category from "../../../components/common/Category";
 import Input from "../../../components/common/Input";
 
+const suggests = [
+	{ id: 0, text: 'What should I wear for my Bday party?' },
+	{ id: 1, text: 'What type of song should I write?' },
+	{ id: 2, text: 'What should I do for my next video?' },
+	{ id: 3, text: 'Which beach would you like me to review?' },
+	{ id: 4, text: 'What is the next challenge?' }
+]
+
 const CreateDareMeTitleScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
+	const { dareme } = useSelector((state) => state.dareme); 
 	const [title, setTitle] = useState('');
 
 	const CreateDareMeScreen = () => {
@@ -15,15 +27,14 @@ const CreateDareMeTitleScreen = ({ navigation }) => {
 
 	const SaveTitle = () => {
 		navigation.navigate('DareMe-Create')
+		dispatch({ type: SET_DAREME, payload: { ...dareme, title: title === '' ? null : title } });
 	}
 
-	const suggests = [
-		{ id: 0, text: 'What should I wear for my Bday party?' },
-		{ id: 1, text: 'What type of song should I write?' },
-		{ id: 2, text: 'What should I do for my next video?' },
-		{ id: 3, text: 'Which beach would you like me to review?' },
-		{ id: 4, text: 'What is the next challenge?' }
-	]
+	useEffect(() => {
+		if(dareme.title) {
+			setTitle(dareme.title);
+		}
+	}, [dareme]);
 
 	return (
 		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
