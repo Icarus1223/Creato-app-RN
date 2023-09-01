@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useScrollToTop } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
 import { PrimaryButton } from "../../../components/common/Button";
 import { AddIconSvg } from "../../../assets/svg";
 import DareOption from "../../../components/DareOption";
 
 const CreateDareMeScreen = ({ navigation }) => {
+	const scrollViewRef = useRef(null);
 
 	const DareMeTitleScreen = () => {
 		navigation.navigate('DareMe-Create-Title');
+		scrollToTop();
 	}
 
+	const DareMeOptionScreen = () => {
+		navigation.navigate('DareMe-Create-DareOption');
+		scrollToTop();
+	}
+
+	const scrollToTop = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
+  };
+
 	return (
-		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
+		<ScrollView ref={scrollViewRef} vertical style={{ backgroundColor: '#FFFFFF' }}>
 			<View style={styles.container}>
 				<View style={styles.screenHeader}>
 					<Text style={styles.screenTitle}>Create DareMe</Text>
@@ -20,7 +34,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 				<View style={styles.mainBody}>
 					<View style={styles.imageContainer}>
 						<View style={styles.deadline}>
-							<PrimaryButton text="Deadline" rounded={true}>
+							<PrimaryButton text="Deadline" rounded={true} >
 								<SvgXml xml={AddIconSvg} />
 							</PrimaryButton>
 						</View>
@@ -35,14 +49,14 @@ const CreateDareMeScreen = ({ navigation }) => {
 					</View>
 					<View style={styles.optionContainer}>
 						<View style={{ marginVertical: 5 }}>
-							<DareOption title="1st Dare Option" username="James" />
+							<DareOption title="1st Dare Option" username="James" onPress={DareMeOptionScreen} />
 						</View>
 						<View style={{ marginVertical: 5 }}>
-							<DareOption title="2nd Dare Option" username="James" />
+							<DareOption title="2nd Dare Option" username="James" onPress={DareMeOptionScreen} />
 						</View>
 					</View>
 				</View>
-				<View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+				<View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
 					<PrimaryButton text="Publish" width={320}/>
 				</View>
 			</View>
@@ -52,7 +66,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		height: 935,
+		height: 960,
 		paddingVertical: 10,
 		backgroundColor: '#FFFFFF'
 	},

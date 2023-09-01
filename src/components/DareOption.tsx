@@ -3,9 +3,9 @@ import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { VoteIconSvg } from "../assets/svg"
 
-const DareOption = ({ title, username }) => {
+const DareOption = ({ title, username, onPress }) => {
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity onPress={onPress}>
 			<View style={styles.container}>
 				<View style={{ justifyContent: 'center', flexDirection: 'row' }}>
 					<View style={styles.optionTitle}>

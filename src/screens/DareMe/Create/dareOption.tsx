@@ -6,8 +6,9 @@ import { BackIconSvg } from "../../../assets/svg";
 import Category from "../../../components/common/Category";
 import Input from "../../../components/common/Input";
 
-const CreateDareMeTitleScreen = ({ navigation }) => {
-	const [title, setTitle] = useState('');
+const CreateDareMeDareOptionScreen = ({ navigation }) => {
+	const [option1, setOption1] = useState('');
+	const [option2, setOption2] = useState('');
 
 	const CreateDareMeScreen = () => {
 		navigation.navigate('DareMe-Create')
@@ -18,11 +19,11 @@ const CreateDareMeTitleScreen = ({ navigation }) => {
 	}
 
 	const suggests = [
-		{ id: 0, text: 'What should I wear for my Bday party?' },
-		{ id: 1, text: 'What type of song should I write?' },
-		{ id: 2, text: 'What should I do for my next video?' },
-		{ id: 3, text: 'Which beach would you like me to review?' },
-		{ id: 4, text: 'What is the next challenge?' }
+		{ id: 0, text: 'Previous options from previous DareMe' },
+		{ id: 1, text: 'Second highest Dare from previous DareMe' },
+		{ id: 2, text: 'Previous suggestions from fans' },
+		{ id: 3, text: 'Other suggestions from our database' },
+		{ id: 4, text: 'Other suggestions' }
 	]
 
 	return (
@@ -34,14 +35,17 @@ const CreateDareMeTitleScreen = ({ navigation }) => {
 							<SvgXml xml={BackIconSvg} />
 						</TouchableOpacity>
 					</View>
-					<Text style={styles.screenTitle}>DareMe Title</Text>
+					<Text style={styles.screenTitle}>Dare options</Text>
 					<View style={{ width: 40, height: 40 }}></View>
 				</View>
 				<View style={styles.title}>
-					<Input value={title} setValue={setTitle} maxLength={20} placeholder="Tell us about the title..."/>
+					<Input value={option1} setValue={setOption1} maxLength={20} placeholder="What is your 1st Dare?" />
+				</View>
+				<View style={styles.title}>
+					<Input value={option2} setValue={setOption2} maxLength={20} placeholder="What is your 2nd Dare?" />
 				</View>
 				<View style={{ marginHorizontal: 35 }}>
-					<Text style={{ fontSize: 18, lineHeight: 20, fontWeight: 600, color: '#54504E', marginVertical: 10 }}>Recent Titles:</Text>
+					<Text style={{ fontSize: 18, lineHeight: 20, fontWeight: 600, color: '#54504E', marginVertical: 10 }}>Recent Dares:</Text>
 				</View>
 				<View style={styles.suggests}>
 					{suggests.map(suggest => (
@@ -60,6 +64,7 @@ const CreateDareMeTitleScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
+		height: 630,
 		paddingVertical: 10,
 		backgroundColor: '#FFFFFF'
 	},
@@ -67,6 +72,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		paddingVertical: 10,
 		paddingHorizontal: 15,
+		marginBottom: 10,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center'
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		marginVertical: 10,
-		width: 325,
+		width: 335,
 		marginRight: 'auto',
 		marginLeft: 'auto'
 	},
@@ -90,10 +96,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	suggest: {
-		maxWidth: 325,
+		maxWidth: 335,
 		marginVertical: 5,
 		width: '100%',
 	}
 });
 
-export default CreateDareMeTitleScreen;
+export default CreateDareMeDareOptionScreen;

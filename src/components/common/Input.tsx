@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput, View, Text, StyleSheet } from "react-native";
 
-const Input = ({ value, setValue, maxLength }) => {
+const Input = ({ value, setValue, maxLength, placeholder }) => {
 
 	return (
 		<View>
@@ -11,7 +11,7 @@ const Input = ({ value, setValue, maxLength }) => {
 				onChangeText={setValue}
 				maxLength={maxLength}
 				placeholderTextColor={'#54504E'}
-				placeholder="Tell us about the title..." 
+				placeholder={placeholder} 
 			/>
 			{maxLength &&
 				<Text style={styles.wordCount}>({value.length}/{maxLength} characters)</Text>
