@@ -10,6 +10,7 @@ import HomeScreen from "./src/screens/Home";
 
 //DareMe
 import CreateDareMeScreen from "./src/screens/DareMe/Create";
+import CreateDareMeTitleScreen from "./src/screens/DareMe/Create/title.tsx";
 
 import AuthScreen from "./src/screens/Auth";
 
@@ -29,6 +30,7 @@ const App = () => {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Auth" component={AuthScreen} />
             <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
+            <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

@@ -6,6 +6,11 @@ import { AddIconSvg } from "../../../assets/svg";
 import DareOption from "../../../components/DareOption";
 
 const CreateDareMeScreen = ({ navigation }) => {
+
+	const DareMeTitleScreen = () => {
+		navigation.navigate('DareMe-Create-Title');
+	}
+
 	return (
 		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
 			<View style={styles.container}>
@@ -20,7 +25,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 							</PrimaryButton>
 						</View>
 						<View style={styles.daremeTitle}>
-							<PrimaryButton text="DareMe Title" rounded={true}>
+							<PrimaryButton text="DareMe Title" rounded={true} onPress={DareMeTitleScreen} >
 								<SvgXml xml={AddIconSvg} />
 							</PrimaryButton>
 						</View>
@@ -52,8 +57,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF'
 	},
 	screenHeader: {
+		height: 50,
 		paddingVertical: 10,
 		paddingHorizontal: 15,
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	screenTitle: {
 		fontSize: 20,
