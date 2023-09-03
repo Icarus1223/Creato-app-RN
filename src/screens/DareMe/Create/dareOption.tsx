@@ -29,16 +29,15 @@ const CreateDareMeDareOptionScreen = ({ navigation }) => {
 	const SaveTitle = () => {
 		navigation.navigate('DareMe-Create');
 		const { options } = dareme;
-		options.option1.title = option1;
-		options.option2.title = option2;
+		options[0].title = option1;
+		options[1].title = option2;
 		dispatch({ type: SET_DAREME, payload: { ...dareme, options: options } });
 	}
 
 	useEffect(() => {
 		const { options } = dareme;
-		const { option1, option2 } = options;
-		if(option1.title) setOption1(option1.title);
-		if(option2.title) setOption2(option2.title);
+		if(options[0].title) setOption1(options[0].title);
+		if(options[1].title) setOption2(options[1].title);
 	}, [dareme]);
 
 	return (

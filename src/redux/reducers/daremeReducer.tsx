@@ -4,14 +4,14 @@ const initialState = {
   dareme: {
     title: null,
     deadline: null,
-    options: {
-      option1: {
+    options: [
+      {
         title: null
       },
-      option2: {
+      {
         title: null
       }
-    }
+    ]
   }
 };
 

@@ -4,6 +4,9 @@ import { useScrollToTop } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 import ActionSheet from "react-native-actionsheet";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
+import ImagePicker from 'react-native-image-crop-picker';
+import { SliderBox } from "react-native-image-slider-box";
 import { SET_DAREME } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import { AddIconSvg, EditIconSvg } from "../../../assets/svg";
@@ -12,11 +15,13 @@ import DareOption from "../../../components/DareOption";
 const CreateDareMeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { dareme } = useSelector((state) => state.dareme);
+	const [photos, setPhotos] = useState([]);
 	const [deadline, setDeadline] = useState(null);
 	const [title, setTitle] = useState(null);
-	const [options, setOptions] = useState({ option1: { title: null }, option2: { title: null } });
+	const [options, setOptions] = useState([{ title: null }, { title: null }]);
 	const scrollViewRef = useRef(null);
 	const actionSheet = useRef(null);
+	//const photoActionSheet = useRef(null);
 
 	const DareMeTitleScreen = () => {
 		navigation.navigate('DareMe-Create-Title');
@@ -37,6 +42,11 @@ const CreateDareMeScreen = ({ navigation }) => {
 	const showDeadlineActionSheet = () => {
     actionSheet.current.show();
   }
+  /*
+  const showUploadPhotosActionSheet = () => {
+  	photoActionSheet.current.show();
+  }
+  */
 
   const SelectDeadline = (index) => {
   	if(index < 5) {
@@ -44,6 +54,69 @@ const CreateDareMeScreen = ({ navigation }) => {
   		dispatch({ type: SET_DAREME, payload: { ...dareme, deadline: index + 3 } });
   	}
   }
+
+  const UploadPhotos = () => {
+		ImagePicker.openPicker({
+		  multiple: true,
+		  mediaType: 'photo'
+		}).then(images => {
+			const results = images.slice(0, 2).map((imageFile) => imageFile.sourceURL);
+			setPhotos(results);
+			dispatch({ type: SET_DAREME, payload: { ...dareme, photos: results } });
+		}).catch((err) => {
+			console.log(err);
+		});
+  }
+
+/*
+  const SelectUploadMethod = (index) => {
+  	if(index === 0) {
+  		ChooseFromDevice();
+  	} else if(index === 1) {
+  		OpenCamera();
+  	}
+  }
+
+  const ChooseFromDevice = () => {
+  	const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        console.log(imageUri)
+      }
+    });
+  }
+
+  const OpenCamera = () => {
+		const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+  
+    launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.error) {
+        console.log('Camera Error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        console.log(imageUri);
+      }
+    });
+  }
+*/
 
   useEffect(() => {
   	setDeadline(dareme.deadline);
@@ -59,6 +132,23 @@ const CreateDareMeScreen = ({ navigation }) => {
 				</View>
 				<View style={styles.mainBody}>
 					<View style={styles.imageContainer}>
+						{photos.length ?
+							<SliderBox
+							  images={photos}
+							  sliderBoxHeight={576}
+							  parentWidth={324}
+							  ImageComponentStyle={{ borderRadius: 10 }}
+							  paginationBoxStyle={{
+							    position: "absolute",
+							    bottom: 100,
+							    padding: 0,
+							    alignItems: "center",
+							    alignSelf: "center",
+							    justifyContent: "center",
+							    paddingVertical: 10
+							  }}
+							/> : null
+						}
 						<View style={styles.deadline}>
 							<PrimaryButton 
 								text={deadline ? `${deadline} Days` : "Deadline"} 
@@ -82,15 +172,29 @@ const CreateDareMeScreen = ({ navigation }) => {
 							</PrimaryButton>
 						</View>
 						<View style={styles.uploadButton} >
-							<PrimaryButton text="Upload Photos" width={300} outlined={true} />
+							<PrimaryButton 
+								text="Upload Photos"
+								width={300}
+								forceColor={photos.length ? '#059669' : null} 
+								onPress={UploadPhotos}
+								outlined={true}
+							/>
 						</View>
 					</View>
 					<View style={styles.optionContainer}>
 						<View style={{ marginVertical: 5 }}>
-							<DareOption title={options.option1.title ? options.option1.title : "1st Dare Option"} username="James" onPress={DareMeOptionScreen} />
+							<DareOption 
+								title={options[0].title ? options[0].title : "1st Dare Option"}
+								username="James"
+								onPress={DareMeOptionScreen} 
+							/>
 						</View>
 						<View style={{ marginVertical: 5 }}>
-							<DareOption title={options.option2.title ? options.option2.title : "2nd Dare Option"} username="James" onPress={DareMeOptionScreen} />
+							<DareOption 
+								title={options[1].title ? options[1].title : "2nd Dare Option"}
+								username="James"
+								onPress={DareMeOptionScreen}
+							/>
 						</View>
 					</View>
 				</View>
@@ -104,7 +208,14 @@ const CreateDareMeScreen = ({ navigation }) => {
         options={['3 Days', '4 Days', '5 days', '6 Days', '7 Days', 'Cancel']}
         cancelButtonIndex={5}
         onPress={SelectDeadline}
-       />
+      />
+      {/*<ActionSheet
+      	ref={photoActionSheet}
+        title={'Upload Photos'}
+        options={['Choose from Device', 'Open Camera', 'Cancel']}
+        cancelButtonIndex={2}
+        onPress={SelectUploadMethod}
+      />*/}
 		</ScrollView>
 	);
 };
