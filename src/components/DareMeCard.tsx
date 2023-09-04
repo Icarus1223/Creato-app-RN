@@ -6,7 +6,7 @@ import Avatar from "./common/Avatar";
 import { PrimaryButton } from "./common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../assets/svg";
 
-const DareMeCard = ({ title }) => {
+const DareMeCard = ({ data }) => {
 	return (
 		<View>
 			<View style={styles.imageContainer}>
@@ -41,6 +41,9 @@ const DareMeCard = ({ title }) => {
 							<Text style={styles.voteInfoText}>20</Text>
 						</View>
 					</View>
+				</View>
+				<View style={styles.title}>
+					<Text style={styles.titleText}>Dare me Title Dare Me Title Dare Me title</Text>
 				</View>
 				<View style={styles.buttonContainer}>
 					<PrimaryButton text="See more" width={280} />
@@ -95,6 +98,17 @@ const styles = StyleSheet.create({
 		lineHeight: 16,
 		fontWeight: 'bold',
 		color: '#FFFFFF'
+	},
+	title: {
+		position: 'absolute',
+		top: 35,
+		paddingHorizontal: 12
+	},
+	titleText: {
+		color: '#FFFFFF',
+		fontSize: 24,
+		lineHeight: 28,
+		fontWeight: 600,
 	},
 	buttonContainer: {
 		position: 'absolute',

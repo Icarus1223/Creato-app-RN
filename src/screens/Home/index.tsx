@@ -24,7 +24,7 @@ const HomeScreen = ({ navigation }) => {
   ]
 
   const renderItem = ({ item }) => {
-    return <DareMeCard title={item.title} />;
+    return <DareMeCard data={item} />;
   }
 
   return (
