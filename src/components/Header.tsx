@@ -33,7 +33,7 @@ const Header = () => {
 				{isAuthenticated ? 
 					<View style={styles.avatar}>
 						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-							<SvgXml xml={DonutIconSvg} />
+							<SvgXml xml={DonutIconSvg('#54504E')} />
 							<Text style={styles.donutCount}>1,000</Text>
 						</View>
 						<Avatar />
@@ -44,14 +44,14 @@ const Header = () => {
 					</View>
 				}
 			</View>
-			{isAuthenticated &&
+			{isAuthenticated ?
 				<View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 5 }}>
 					<View style={styles.createBtn}>
 						<PrimaryButton text="Create" width={'100%'} onPress={CreateDareMeScreen}>
 							<SvgXml xml={AddIconSvg('white')} />
 						</PrimaryButton>
 					</View>
-				</View>
+				</View> : null
 			}
 		</View>
 	);

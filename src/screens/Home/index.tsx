@@ -1,13 +1,10 @@
 import { SafeAreaView, View, Button } from "react-native";
+import DareMeCard from "../../components/DareMeCard";
 
 const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Button
-        title="Go to Jane's profile"
-        onPress={() =>
-          navigation.navigate('Auth', {name: 'Jane'})
-        }
+      <DareMeCard
       />
     </SafeAreaView>
   );

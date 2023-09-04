@@ -2,6 +2,7 @@ import { SET_DAREME } from "../actionTypes";
 
 const initialState = {
   dareme: {
+    photos: [],
     title: null,
     deadline: null,
     options: [

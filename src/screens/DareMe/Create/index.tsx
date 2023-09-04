@@ -42,6 +42,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 	const showDeadlineActionSheet = () => {
     actionSheet.current.show();
   }
+
   /*
   const showUploadPhotosActionSheet = () => {
   	photoActionSheet.current.show();
@@ -122,6 +123,7 @@ const CreateDareMeScreen = ({ navigation }) => {
   	setDeadline(dareme.deadline);
   	setTitle(dareme.title);
   	setOptions(dareme.options);
+  	setPhotos(dareme.photos);
   }, [dareme]);
 
 	return (
