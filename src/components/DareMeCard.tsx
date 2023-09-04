@@ -1,32 +1,22 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { SvgXml } from "react-native-svg";
 import Avatar from "./common/Avatar";
 import { PrimaryButton } from "./common/Button";
-import { DonutIconSvg, UserGroupIconSvg } from "../assets/svg";
+import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg } from "../assets/svg";
 
 const DareMeCard = ({ data }) => {
+	const [index, setIndex] = useState(0);
+	const photos = ['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/hongkong'];
+
 	return (
 		<View>
 			<View style={styles.imageContainer}>
-			{/*
-				<SliderBox
-				  images={['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/ant']}
-				  sliderBoxHeight={576}
-				  parentWidth={324}
-				  ImageComponentStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
-				  paginationBoxStyle={{
-				    position: "absolute",
-				    bottom: 70,
-				    padding: 0,
-				    alignItems: "center",
-				    alignSelf: "center",
-				    justifyContent: "center",
-				    paddingVertical: 10
-				  }}
+				<Image
+					style={{ position: 'absolute',  width: 324, height: 576, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+					source={{ uri: photos[index] }}
 				/>
-				*/}
 				<View style={styles.containerHeader}>
 					<View>
 						<Text style={styles.leftTime}>7 Days</Text>
@@ -42,6 +32,20 @@ const DareMeCard = ({ data }) => {
 						</View>
 					</View>
 				</View>
+				{photos.length === 2 ?
+					<View style={styles.arrowContainer}>
+						{index === 1 ?
+							<TouchableOpacity onPress={() => setIndex((i) => (i - 1)%2)}>
+								<SvgXml xml={PreviousArrowIconSvg} />
+							</TouchableOpacity> : <View></View> 
+						}
+						{index === 0 ?
+							<TouchableOpacity onPress={() => setIndex((i) => (i + 1)%2)}>
+								<SvgXml xml={NextArrowIconSvg} />
+							</TouchableOpacity> : <View></View>
+						}
+					</View>	: null 
+				}
 				<View style={styles.title}>
 					<Text style={styles.titleText}>Dare me Title Dare Me Title Dare Me title</Text>
 				</View>
@@ -108,7 +112,17 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		fontSize: 24,
 		lineHeight: 28,
-		fontWeight: 600,
+		fontWeight: 800,
+	},
+	arrowContainer: {
+		position: 'absolute',
+		top: 230,
+		width: '100%',
+		paddingHorizontal: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		height: 84,
 	},
 	buttonContainer: {
 		position: 'absolute',

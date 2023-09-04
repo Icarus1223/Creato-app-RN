@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, View, Button, Dimensions, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, View, Button, Dimensions, StyleSheet, Image } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 import DareMeCard from "../../components/DareMeCard";
 
@@ -32,6 +32,7 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView>
         <View style={styles.container1}>
           <Carousel
+            containerCustomStyle={{ paddingVertical: 10 }}
             data={carouselItems}
             renderItem={renderItem}
             sliderWidth={width}
@@ -46,7 +47,6 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container1: {
     marginVertical: 10,
-    paddingVertical: 10,
   }
 })
 

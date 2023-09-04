@@ -158,3 +158,41 @@ export const UserGroupIconSvg = (color) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="17" height="12" viewBox="0 0 17 12" fill="none">
     <path d="M11.75 5.25C12.995 5.25 13.9925 4.245 13.9925 3C13.9925 1.755 12.995 0.75 11.75 0.75C10.505 0.75 9.5 1.755 9.5 3C9.5 4.245 10.505 5.25 11.75 5.25ZM5.75 5.25C6.995 5.25 7.9925 4.245 7.9925 3C7.9925 1.755 6.995 0.75 5.75 0.75C4.505 0.75 3.5 1.755 3.5 3C3.5 4.245 4.505 5.25 5.75 5.25ZM5.75 6.75C4.0025 6.75 0.5 7.6275 0.5 9.375V11.25H11V9.375C11 7.6275 7.4975 6.75 5.75 6.75ZM11.75 6.75C11.5325 6.75 11.285 6.765 11.0225 6.7875C11.8925 7.4175 12.5 8.265 12.5 9.375V11.25H17V9.375C17 7.6275 13.4975 6.75 11.75 6.75Z" fill="white"/>
   </svg>`
+
+export const NextArrowIconSvg = 
+  `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="60" viewBox="0 0 24 60" fill="none">
+    <g opacity="0.7" filter="url(#filter0_d_490_184516)">
+      <path d="M18.7914 26.6254C19.236 27.4879 19.236 28.5121 18.7914 29.3746L6.41656 53.3805C4.97522 56.1766 0.750001 55.1516 0.750001 52.0059L0.750003 3.99405C0.750003 0.848362 4.97522 -0.176587 6.41656 2.61947L18.7914 26.6254Z" fill="white"/>
+    </g>
+    <defs>
+      <filter id="filter0_d_490_184516" x="0.75" y="0.988281" width="22.375" height="58.0234" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>  
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="2" dy="2"/>
+        <feGaussianBlur stdDeviation="1"/>
+        <feComposite in2="hardAlpha" operator="out"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_490_184516"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_490_184516" result="shape"/>
+      </filter>
+    </defs>
+  </svg>`
+
+export const PreviousArrowIconSvg = 
+  `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="84" viewBox="0 0 25 84" fill="none">
+    <g opacity="0.7" filter="url(#filter0_d_1198_211047)">
+      <path d="M0.708586 43.3746C0.263993 42.5121 0.263991 41.4879 0.708585 40.6254L13.0834 16.6195C14.5248 13.8234 18.75 14.8484 18.75 17.9941L18.75 66.0059C18.75 69.1516 14.5248 70.1766 13.0834 67.3805L0.708586 43.3746Z" fill="white"/>
+    </g>
+    <defs>
+      <filter id="filter0_d_1198_211047" x="0.375" y="14.9883" width="22.375" height="58.0234" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="2" dy="2"/>
+        <feGaussianBlur stdDeviation="1"/>
+        <feComposite in2="hardAlpha" operator="out"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1198_211047"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1198_211047" result="shape"/>
+      </filter>
+    </defs>
+  </svg>`
