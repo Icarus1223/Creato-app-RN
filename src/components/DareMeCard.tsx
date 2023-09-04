@@ -6,10 +6,11 @@ import Avatar from "./common/Avatar";
 import { PrimaryButton } from "./common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../assets/svg";
 
-const DareMeCard = () => {
+const DareMeCard = ({ title }) => {
 	return (
 		<View>
 			<View style={styles.imageContainer}>
+			{/*
 				<SliderBox
 				  images={['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/ant']}
 				  sliderBoxHeight={576}
@@ -25,6 +26,7 @@ const DareMeCard = () => {
 				    paddingVertical: 10
 				  }}
 				/>
+				*/}
 				<View style={styles.containerHeader}>
 					<View>
 						<Text style={styles.leftTime}>7 Days</Text>
