@@ -3,6 +3,7 @@ import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Image } from "rea
 import { SliderBox } from "react-native-image-slider-box";
 import { SvgXml } from "react-native-svg";
 import Avatar from "../../../components/common/Avatar";
+import DareOption from "../../../components/DareOption";
 import { PrimaryButton } from "../../../components/common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
@@ -55,6 +56,22 @@ const DareMeDetailScreen = ({ navigation }) => {
           </View>
           <View style={styles.username}>
             <Text>James</Text>
+          </View>
+        </View>
+        <View style={styles.optionContainer}>
+          <View style={{ marginVertical: 5 }}>
+            <DareOption 
+              title={"1st Dare Option"}
+              username="James"
+              onPress={() => {}} 
+            />
+          </View>
+          <View style={{ marginVertical: 5 }}>
+            <DareOption 
+              title={"2nd Dare Option"}
+              username="James"
+              onPress={() => {}}
+            />
           </View>
         </View>
       </View>
@@ -155,6 +172,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 14,
     fontWeight: 300
+  },
+  optionContainer: {
+    marginTop: 5,
+    width: 324,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    shadowColor: 'rgb(0, 0, 0, 0.35)',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
   }
 });
 

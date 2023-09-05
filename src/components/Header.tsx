@@ -41,7 +41,9 @@ const Header = () => {
 							<SvgXml xml={DonutIconSvg('#54504E')} />
 							<Text style={styles.donutCount}>1,000</Text>
 						</View>
-						<Avatar />
+						<TouchableOpacity>
+							<Avatar />
+						</TouchableOpacity>
 					</View>
 				:
 					<View style={styles.button}>
@@ -83,8 +85,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	donutCount: {
-		marginLeft: 3,
-		marginRight: 5
+		width: 40,
+		marginHorizontal: 3
 	},
 	createBtn: {
 		maxWidth: 320,

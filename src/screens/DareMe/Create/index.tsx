@@ -224,7 +224,6 @@ const CreateDareMeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		height: 960,
 		paddingVertical: 10,
 		backgroundColor: '#FFFFFF'
 	},
