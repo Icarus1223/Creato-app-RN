@@ -33,6 +33,11 @@ const Header = () => {
 				{isAuthenticated ? 
 					<View style={styles.avatar}>
 						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+							<TouchableOpacity onPress={CreateDareMeScreen}>
+								<View style={{ marginRight: 10, width: 30, height: 30, backgroundColor: 'white', borderColor: 'black', borderWidth: 3, justifyContent: 'center', alignItems: 'center', borderRadius: 15 }}>
+									<SvgXml xml={AddIconSvg('black')} />
+								</View>
+							</TouchableOpacity>
 							<SvgXml xml={DonutIconSvg('#54504E')} />
 							<Text style={styles.donutCount}>1,000</Text>
 						</View>
@@ -44,15 +49,6 @@ const Header = () => {
 					</View>
 				}
 			</View>
-			{isAuthenticated ?
-				<View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 5 }}>
-					<View style={styles.createBtn}>
-						<PrimaryButton text="Create" width={'100%'} onPress={CreateDareMeScreen}>
-							<SvgXml xml={AddIconSvg('white')} />
-						</PrimaryButton>
-					</View>
-				</View> : null
-			}
 		</View>
 	);
 };	

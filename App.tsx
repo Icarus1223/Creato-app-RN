@@ -15,6 +15,8 @@ import CreateDareMeScreen from "./src/screens/DareMe/Create";
 import CreateDareMeTitleScreen from "./src/screens/DareMe/Create/title.tsx";
 import CreateDareMeOptionScreen from "./src/screens/DareMe/Create/dareOption.tsx";
 
+import DareMeDetailScreen from "./src/screens/DareMe/Detail";
+
 import AuthScreen from "./src/screens/Auth";
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +38,7 @@ const App = () => {
               <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
               <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
               <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
+              <Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaView>

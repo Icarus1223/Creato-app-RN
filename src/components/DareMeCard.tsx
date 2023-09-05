@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { SliderBox } from "react-native-image-slider-box";
+import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
 import Avatar from "./common/Avatar";
 import { PrimaryButton } from "./common/Button";
 import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg } from "../assets/svg";
 
 const DareMeCard = ({ data }) => {
+	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
 	const photos = ['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/hongkong'];
+
+	const DareMeHandleClick = () => {
+		navigation.navigate('DareMe-Detail');
+	}
 
 	return (
 		<View>
@@ -50,7 +55,7 @@ const DareMeCard = ({ data }) => {
 					<Text style={styles.titleText}>Dare me Title Dare Me Title Dare Me title</Text>
 				</View>
 				<View style={styles.buttonContainer}>
-					<PrimaryButton text="See more" width={280} />
+					<PrimaryButton text="See more" width={280} onPress={DareMeHandleClick} />
 				</View>
 			</View>
 			<View style={styles.toolContainer}>
