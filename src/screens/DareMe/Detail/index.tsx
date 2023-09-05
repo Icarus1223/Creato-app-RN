@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { SvgXml } from "react-native-svg";
@@ -7,10 +7,22 @@ import DareOption from "../../../components/DareOption";
 import { PrimaryButton } from "../../../components/common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
-
 const DareMeDetailScreen = ({ navigation }) => {
+  const scrollViewRef = useRef(null);
+
+  const DareMeVoteScreen  = () => {
+    navigation.navigate('DareMe-Vote');
+    scrollToTop();
+  }
+
+  const scrollToTop = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
+  }
+
   return (
-    <ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
+    <ScrollView ref={scrollViewRef} vertical style={{ backgroundColor: '#FFFFFF' }}>
       <View style={{ width: '100%', alignItems: 'center', paddingVertical: 10}}>
         <View style={styles.screenHeader}>
           <Text style={styles.screenTitle}>DareMe detail</Text>
@@ -63,14 +75,14 @@ const DareMeDetailScreen = ({ navigation }) => {
             <DareOption 
               title={"1st Dare Option"}
               username="James"
-              onPress={() => {}} 
+              onPress={DareMeVoteScreen} 
             />
           </View>
           <View style={{ marginVertical: 5 }}>
             <DareOption 
               title={"2nd Dare Option"}
               username="James"
-              onPress={() => {}}
+              onPress={DareMeVoteScreen}
             />
           </View>
         </View>

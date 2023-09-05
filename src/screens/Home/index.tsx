@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#FFFFFF' }} >
       <View style={styles.container1}>
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
