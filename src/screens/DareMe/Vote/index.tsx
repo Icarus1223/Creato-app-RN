@@ -3,11 +3,24 @@ import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from "react-nati
 import { SvgXml } from "react-native-svg";
 import DareOption from "../../../components/DareOption";
 import { PrimaryButton } from "../../../components/common/Button";
+import CustomMoal from "../../../components/common/Modal";
 import { DonutIconSvg, UserGroupIconSvg, BackIconSvg } from "../../../assets/svg";
 
 const DareMeVoteScreen = ({ navigation }) => {
+  const [visible, setVisible] = useState(false);
+  const [donut, setDonut] = useState(null);
+
   const DareMeDetailScreen = () => {
     navigation.navigate('DareMe-Detail');
+  }
+
+  const VoteModalOpen = (count) => {
+    setDonut(count);
+    setVisible(true);
+  }
+
+  const VoteDareOption = () => {
+    setVisible(false);
   }
 
   return (
@@ -35,6 +48,7 @@ const DareMeVoteScreen = ({ navigation }) => {
               text="Vote (1 donut)" 
               outlined={true}
               width={'100%'}
+              onPress={() => VoteModalOpen(1)}
             />
           </View>
           <View style={{ marginVertical: 10 }}>
@@ -42,10 +56,22 @@ const DareMeVoteScreen = ({ navigation }) => {
               text="Vote (10 donuts)"
               outlined={true}
               width={'100%'}
+              onPress={() => VoteModalOpen(10)}
             />
           </View>
         </View>
       </View>
+      <CustomMoal 
+        visible={visible}
+        setVisible={setVisible}
+        title={"Vote"}
+      >
+        <Text style={styles.donutCount}>{donut ? donut : ''} donut{donut === 10 ? 's' : ''} For:</Text>
+        <Text style={styles.optionTitle}>Dare option title</Text>
+        <View style={{ marginTop: 10, justifyContent: 'center', flexDirection: 'row' }}>
+          <PrimaryButton width={200} text="Confirm" onPress={VoteDareOption} />
+        </View>
+      </CustomMoal>
     </ScrollView>
   ); 
 };
@@ -82,6 +108,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 10,
+  },
+  donutCount: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 400,
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  optionTitle: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
 
