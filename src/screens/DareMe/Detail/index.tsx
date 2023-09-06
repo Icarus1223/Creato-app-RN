@@ -15,6 +15,11 @@ const DareMeDetailScreen = ({ navigation }) => {
     scrollToTop();
   }
 
+  const ProfileScreen = () => {
+    navigation.navigate('Profile');
+    scrollToTop();
+  }
+
   const scrollToTop = () => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
@@ -63,12 +68,14 @@ const DareMeDetailScreen = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.toolContainer}>
-          <View style={styles.avatarContainer}>
-            <Avatar />
-          </View>
-          <View style={styles.username}>
-            <Text>James</Text>
-          </View>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
+            <View style={styles.avatarContainer}>
+              <Avatar />
+            </View>
+            <View style={styles.username}>
+              <Text>James</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.optionContainer}>
           <View style={{ marginVertical: 5 }}>

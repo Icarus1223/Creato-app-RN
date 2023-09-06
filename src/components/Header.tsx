@@ -12,15 +12,19 @@ const Header = () => {
 	const navigation = useNavigation();
 
 	const LoginScreen = () => {
-		navigation.navigate('Auth')
+		navigation.navigate('Auth');
 	}
 
 	const HomeScreen = () => {
-		navigation.navigate('Home')
+		navigation.navigate('Home');
 	}
 
 	const CreateDareMeScreen = () => {
-		navigation.navigate('DareMe-Create')
+		navigation.navigate('DareMe-Create');
+	}
+
+	const ProfileScreen = () => {
+		navigation.navigate('Profile');
 	}
 
 	return (
@@ -41,7 +45,7 @@ const Header = () => {
 							<SvgXml xml={DonutIconSvg('#54504E')} />
 							<Text style={styles.donutCount}>1,000</Text>
 						</View>
-						<TouchableOpacity>
+						<TouchableOpacity onPress={ProfileScreen}>
 							<Avatar />
 						</TouchableOpacity>
 					</View>
@@ -58,7 +62,7 @@ const Header = () => {
 const styles = StyleSheet.create({
 	container: {
 		borderBottomWidth: 2,
-    borderBottomColor: '#BCB6A9'
+    	borderBottomColor: '#BCB6A9'
 	},
 	header: {
 		flexDirection: 'row',
@@ -75,11 +79,11 @@ const styles = StyleSheet.create({
 	logoText: {
 		marginLeft: 15,
 		fontSize: 24,
-    lineHeight: 28,
-    fontWeight: 600,
+    	lineHeight: 28,
+    	fontWeight: 600,
 	},
 	avatar: {
-		height: 52,
+		height: 54,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center'
@@ -88,11 +92,6 @@ const styles = StyleSheet.create({
 		width: 40,
 		marginHorizontal: 3
 	},
-	createBtn: {
-		maxWidth: 320,
-		width: '100%',
-		marginHorizontal: 10
-	}
 });
 
 export default Header;

@@ -20,6 +20,8 @@ import DareMeVoteScreen from "./src/screens/DareMe/Vote";
 
 import AuthScreen from "./src/screens/Auth";
 
+import ProfileScreen from "./src/screens/Profile";
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -41,6 +43,7 @@ const App = () => {
               <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
               <Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
               <Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
+              <Stack.Screen name="Profile" component={ProfileScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaView>

@@ -1,9 +1,9 @@
 import React from "react";
 import UserAvatar from "react-native-user-avatar";
 
-const Avatar = ({ username }) => {
+const Avatar = ({ username, size }) => {
 	return (
-		<UserAvatar size={35} />
+		<UserAvatar size={size ? size : 35} />
 	);
 };
 

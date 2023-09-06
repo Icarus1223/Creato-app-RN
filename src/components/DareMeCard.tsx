@@ -15,6 +15,10 @@ const DareMeCard = ({ data }) => {
 		navigation.navigate('DareMe-Detail');
 	}
 
+	const ProfileScreen = () => {
+		navigation.navigate('Profile');
+	}
+
 	return (
 		<View>
 			<View style={styles.imageContainer}>
@@ -59,12 +63,14 @@ const DareMeCard = ({ data }) => {
 				</View>
 			</View>
 			<View style={styles.toolContainer}>
-				<View style={styles.avatarContainer}>
-					<Avatar />
-				</View>
-				<View style={styles.username}>
-					<Text>James</Text>
-				</View>
+				<TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
+					<View style={styles.avatarContainer}>
+							<Avatar />
+					</View>
+					<View style={styles.username}>
+						<Text>James</Text>
+					</View>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
