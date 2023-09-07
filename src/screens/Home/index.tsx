@@ -1,9 +1,12 @@
+import React, { useRef, useCallback } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Button, Dimensions, StyleSheet, Text } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 import DareMeCard from "../../components/DareMeCard";
 
 const HomeScreen = ({ navigation }) => {
   const width = Dimensions.get('window').width;
+  const scrollViewRef = useRef(null);
 
   const carouselItems = [
     {
@@ -23,12 +26,47 @@ const HomeScreen = ({ navigation }) => {
     },
   ]
 
+  const finishedDareme = [
+    {
+        title:"Finished Dareme Title 1",
+        finished: true
+    },
+    {
+        title:"Finished Dareme Title 2",
+        finished: true
+    },
+    {
+        title:"Finished Dareme Title 3",
+        finished: true
+    },
+    {
+        title:"Finished Dareme Title 4",
+        finished: true
+    },
+    {
+        title:"Finished Dareme Title 5",
+        finished: true
+    },
+  ]
+
+  const scrollToTop = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true });
+    }
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      scrollToTop();
+    }, [])
+  );
+
   const renderItem = ({ item }) => {
     return <DareMeCard data={item} />;
   }
 
   return (
-    <ScrollView style={{ backgroundColor: '#FFFFFF' }} >
+    <ScrollView ref={scrollViewRef} style={{ backgroundColor: '#FFFFFF' }} >
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Ongoing DareMe 🙌🏻</Text>
       </View>
@@ -47,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.sectionContainer}>
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={carouselItems}
+          data={finishedDareme}
           renderItem={renderItem}
           sliderWidth={width}
           itemWidth={320}

@@ -9,10 +9,11 @@ import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg 
 const DareMeCard = ({ data }) => {
 	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
+	const { title, finished } = data;
 	const photos = ['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/hongkong'];
 
 	const DareMeHandleClick = () => {
-		navigation.navigate('DareMe-Detail');
+		navigation.navigate(finished ? 'DareMe-Result' : 'DareMe-Detail');
 	}
 
 	const ProfileScreen = () => {
@@ -56,10 +57,10 @@ const DareMeCard = ({ data }) => {
 					</View>	: null 
 				}
 				<View style={styles.title}>
-					<Text style={styles.titleText}>Dare me Title Dare Me Title Dare Me title</Text>
+					<Text style={styles.titleText}>{title}</Text>
 				</View>
 				<View style={styles.buttonContainer}>
-					<PrimaryButton text="See more" width={280} onPress={DareMeHandleClick} />
+					<PrimaryButton text={finished ? "See Results" : "See More"} width={280} onPress={DareMeHandleClick} />
 				</View>
 			</View>
 			<View style={styles.toolContainer}>
