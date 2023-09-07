@@ -1,4 +1,4 @@
-import { ScrollView, View, Button, Dimensions, StyleSheet, Image } from "react-native";
+import { ScrollView, View, Button, Dimensions, StyleSheet, Text } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 import DareMeCard from "../../components/DareMeCard";
 
@@ -29,7 +29,34 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={{ backgroundColor: '#FFFFFF' }} >
-      <View style={styles.container1}>
+      <View style={styles.sectionTitleContainer}>
+        <Text style={styles.sectionTitle}>Ongoing DareMe 🙌🏻</Text>
+      </View>
+      <View style={styles.sectionContainer}>
+        <Carousel
+          containerCustomStyle={{ paddingVertical: 10 }}
+          data={carouselItems}
+          renderItem={renderItem}
+          sliderWidth={width}
+          itemWidth={320}
+        />
+      </View>
+      <View style={styles.sectionTitleContainer}>
+        <Text style={styles.sectionTitle}>Finished DareMe</Text>
+      </View>
+      <View style={styles.sectionContainer}>
+        <Carousel
+          containerCustomStyle={{ paddingVertical: 10 }}
+          data={carouselItems}
+          renderItem={renderItem}
+          sliderWidth={width}
+          itemWidth={320}
+        />
+      </View>
+      <View style={styles.sectionTitleContainer}>
+        <Text style={styles.sectionTitle}>Posts on Fanwall</Text>
+      </View>
+      <View style={styles.sectionContainer}>
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={carouselItems}
@@ -43,7 +70,19 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container1: {
+  sectionTitleContainer: {
+    borderBottomColor: '#54504E',
+    borderBottomWidth: 0.5,
+    marginHorizontal: 10,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    lineHeight: 26,
+    fontWeight: 600,
+    marginTop: 10,
+    color: '#54504E',
+  },
+  sectionContainer: {
     marginVertical: 10,
   }
 })
