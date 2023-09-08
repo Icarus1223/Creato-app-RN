@@ -19,6 +19,8 @@ import DareMeDetailScreen from "./src/screens/DareMe/Detail";
 import DareMeVoteScreen from "./src/screens/DareMe/Vote";
 import DareMeResultScreen from "./src/screens/DareMe/Result";
 
+import FanwallPostScreen from "./src/screens/Fanwall/Post";
+
 import AuthScreen from "./src/screens/Auth";
 
 import ProfileScreen from "./src/screens/Profile";
@@ -32,11 +34,7 @@ const App = () => {
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
             <Header />
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false
-              }}
-            >
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Auth" component={AuthScreen} />
               <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
@@ -45,6 +43,7 @@ const App = () => {
               <Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
               <Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
               <Stack.Screen name="DareMe-Result" component={DareMeResultScreen} />
+              <Stack.Screen name="Fanwall-Post" component={FanwallPostScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
             </Stack.Navigator>
           </NavigationContainer>

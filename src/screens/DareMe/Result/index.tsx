@@ -6,6 +6,9 @@ import { PrimaryButton } from "../../../components/common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
 const DareMeResultScreen = ({ navigation }) => {
+	const FanwallPostScreen = () => {
+		navigation.navigate('Fanwall-Post');
+	}
 
 	return (
 		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
@@ -45,8 +48,8 @@ const DareMeResultScreen = ({ navigation }) => {
             />
           </View>
         </View>
-        <View stle={{ marginLeft: 'auto', marginRight: 'auto'}}>
-        	<PrimaryButton width={280} text="Post on Fanwall" />
+        <View style={{ marginLeft: 'auto', marginRight: 'auto'}}>
+        	<PrimaryButton width={280} text="Post on Fanwall" onPress={FanwallPostScreen}/>
         </View>
       </View>
 		</ScrollView>
