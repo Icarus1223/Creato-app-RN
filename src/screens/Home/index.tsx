@@ -3,6 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Button, Dimensions, StyleSheet, Text } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 import DareMeCard from "../../components/DareMeCard";
+import FanwallCard from "../../components/FanwallCard";
 
 const HomeScreen = ({ navigation }) => {
   const width = Dimensions.get('window').width;
@@ -61,8 +62,12 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
-  const renderItem = ({ item }) => {
+  const renderDareMeCardItem = ({ item }) => {
     return <DareMeCard data={item} />;
+  }
+
+  const renderFanwallCardItem = ({ item }) => {
+    return <FanwallCard data={item} />
   }
 
   return (
@@ -74,7 +79,7 @@ const HomeScreen = ({ navigation }) => {
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={carouselItems}
-          renderItem={renderItem}
+          renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}
         />
@@ -86,7 +91,7 @@ const HomeScreen = ({ navigation }) => {
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={finishedDareme}
-          renderItem={renderItem}
+          renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}
         />
@@ -98,7 +103,7 @@ const HomeScreen = ({ navigation }) => {
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={carouselItems}
-          renderItem={renderItem}
+          renderItem={renderFanwallCardItem}
           sliderWidth={width}
           itemWidth={320}
         />
