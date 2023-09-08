@@ -4,6 +4,7 @@ import { SvgXml } from "react-native-svg";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Carousel from 'react-native-snap-carousel';
 import DareMeCard from "../../components/DareMeCard";
+import FanwallCard from "../../components/FanwallCard";
 import Avatar from "../../components/common/Avatar";
 import { CreatoLogoSvg, DonutIconSvg, AddIconSvg, DareIconSvg, RewardIconSvg } from "../../assets/svg";
 
@@ -49,9 +50,20 @@ const DareMeTab = ({ items }) => {
 const FanwallTab = ({ items }) => {
 	const width = Dimensions.get('window').width;
 
+	const renderItem = ({ item }) => {
+		return <FanwallCard data={item} />
+	}
+
   return (
-    // Your Profile view component
-    <Text>Screen2</Text>
+    <ScrollView>
+    	<Carousel
+        containerCustomStyle={{ paddingVertical: 10 }}
+        data={items}
+        renderItem={renderItem}
+        sliderWidth={width}
+        itemWidth={320}
+       />
+    </ScrollView>
   );
 };
 

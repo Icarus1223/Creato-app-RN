@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	containerHeader: {
 		position: 'absolute',
-		top: 0,
+		top: 1,
 		paddingVertical: 8,
 		paddingHorizontal: 12,
 		width: '100%',
