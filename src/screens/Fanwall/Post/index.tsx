@@ -55,7 +55,7 @@ const FanwallPostScreen = ({ navigation }) => {
 					}
 				</View>
         <View style={{ marginLeft: 'auto', marginRight: 'auto', marginVertical: 20}}>
-        	<PrimaryButton width={300} text="Post Now" onPress={PostFanwall}/>
+        	<PrimaryButton width={300} text="Post Now" onPress={PostFanwall} />
         </View>
       </View>
 		</ScrollView>

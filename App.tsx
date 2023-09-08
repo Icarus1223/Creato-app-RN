@@ -20,6 +20,7 @@ import DareMeVoteScreen from "./src/screens/DareMe/Vote";
 import DareMeResultScreen from "./src/screens/DareMe/Result";
 
 import FanwallPostScreen from "./src/screens/Fanwall/Post";
+import FanwallDetailScreen from "./src/screens/Fanwall/Detail";
 
 import AuthScreen from "./src/screens/Auth";
 
@@ -44,6 +45,7 @@ const App = () => {
               <Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
               <Stack.Screen name="DareMe-Result" component={DareMeResultScreen} />
               <Stack.Screen name="Fanwall-Post" component={FanwallPostScreen} />
+              <Stack.Screen name="Fanwall-Detail" component={FanwallDetailScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
             </Stack.Navigator>
           </NavigationContainer>
