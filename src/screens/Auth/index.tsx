@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthContext } from "../../utils/AuthContext"
 import { SvgXml } from 'react-native-svg';
 import { GoogleButtonSvg } from '../../assets/svg';
@@ -7,8 +9,18 @@ import { GoogleButtonSvg } from '../../assets/svg';
 const AuthScreen = ({ navigation }) => {
 	const { isAuthenticated, login, logout } = useContext(AuthContext);
 
-	const GoogleLogin = () => {
-		login();
+	GoogleSignin.configure({
+	  webClientId: '451351028152-ts3hp6bgcqkboq8gm5n7ruc6q56krpe8.apps.googleusercontent.com',
+	});
+
+	const GoogleLoginHandle = async() => {
+		//login();
+		const { idToken } = await GoogleSignin.signIn();
+		const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+		const user_sign_in = auth().signInWithCredential(googleCredential);
+		user_sign_in.then(re => {
+			console.log(re)
+		})
 	}
 
 	return (
@@ -17,7 +29,7 @@ const AuthScreen = ({ navigation }) => {
 				<Text style={styles.welcomeText}>Welcome!</Text>
 				<Text style={styles.continueWithText}>Continue With:</Text>
 				<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-					<TouchableOpacity style={styles.googleLogin} onPress={GoogleLogin}>
+					<TouchableOpacity style={styles.googleLogin} onPress={GoogleLoginHandle}>
 						<SvgXml xml={GoogleButtonSvg}/>
 					</TouchableOpacity>
 				</View>

@@ -4,7 +4,6 @@ import { useScrollToTop } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
 import ActionSheet from "react-native-actionsheet";
-import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import ImagePicker from 'react-native-image-crop-picker';
 import { SliderBox } from "react-native-image-slider-box";
 import { SET_DAREME } from "../../../redux/actionTypes";
