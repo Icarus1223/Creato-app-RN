@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from "react-redux";
 import { AuthContext } from "../utils/AuthContext"
 import { PrimaryButton } from "../components/common/Button";
 import Avatar from "../components/common/Avatar";
@@ -8,7 +9,8 @@ import { SvgXml } from "react-native-svg";
 import { CreatoLogoSvg, DonutIconSvg, AddIconSvg } from "../assets/svg";
 
 const Header = () => {
-	const { isAuthenticated, login, logout } = useContext(AuthContext);
+	const user = useSelector((state) => state.auth.user);
+	const { isAuthenticated } = useContext(AuthContext);
 	const navigation = useNavigation();
 
 	const LoginScreen = () => {
@@ -27,6 +29,10 @@ const Header = () => {
 		navigation.navigate('Profile');
 	}
 
+	useEffect(() => {
+		if(isAuthenticated && navigation) navigation.navigate('Home');
+	}, [isAuthenticated, navigation])
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
@@ -43,10 +49,10 @@ const Header = () => {
 								</View>
 							</TouchableOpacity>
 							<SvgXml xml={DonutIconSvg('#54504E')} />
-							<Text style={styles.donutCount}>1,000</Text>
+							<Text style={styles.donutCount}>{user ? user.balance.toLocaleString() : null }</Text>
 						</View>
 						<TouchableOpacity onPress={ProfileScreen}>
-							<Avatar />
+							<Avatar username={user ? user.name : null} avatar={user ? user.avatar : null}/>
 						</TouchableOpacity>
 					</View>
 				:

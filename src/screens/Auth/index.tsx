@@ -5,22 +5,21 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { AuthContext } from "../../utils/AuthContext"
 import { SvgXml } from 'react-native-svg';
 import { GoogleButtonSvg } from '../../assets/svg';
+import { GoogleClientId } from "../../constants";
 
 const AuthScreen = ({ navigation }) => {
 	const { isAuthenticated, login, logout } = useContext(AuthContext);
 
 	GoogleSignin.configure({
-	  webClientId: '451351028152-ts3hp6bgcqkboq8gm5n7ruc6q56krpe8.apps.googleusercontent.com',
+	  webClientId: GoogleClientId
 	});
 
 	const GoogleLoginHandle = async() => {
-		//login();
 		const { idToken } = await GoogleSignin.signIn();
 		const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-		const user_sign_in = auth().signInWithCredential(googleCredential);
-		user_sign_in.then(re => {
-			console.log(re)
-		})
+		const userCredential = await auth().signInWithCredential(googleCredential);
+		const accessToken = await userCredential.user.getIdToken();
+		login(userCredential.additionalUserInfo.isNewUser, accessToken)
 	}
 
 	return (
