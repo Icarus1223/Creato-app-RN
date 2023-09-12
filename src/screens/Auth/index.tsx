@@ -33,7 +33,7 @@ const AuthScreen = ({ navigation }) => {
 					</TouchableOpacity>
 				</View>
 			</View>
-    </View>
+	</View>
 	);
 };
 

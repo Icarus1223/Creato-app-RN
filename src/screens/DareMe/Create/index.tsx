@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import storage from '@react-native-firebase/storage';
 import { ScrollView, View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useScrollToTop } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
@@ -7,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ActionSheet from "react-native-actionsheet";
 import ImagePicker from 'react-native-image-crop-picker';
 import { SliderBox } from "react-native-image-slider-box";
-import { SET_DAREME } from "../../../redux/actionTypes";
+import { CreateDareMe } from "../../../firebase";
+import { SET_DAREME, SET_DAREME_INITIAL } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import { AddIconSvg, EditIconSvg } from "../../../assets/svg";
 import DareOption from "../../../components/DareOption";
@@ -15,14 +15,14 @@ import DareOption from "../../../components/DareOption";
 const CreateDareMeScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { dareme } = useSelector((state) => state.dareme);
+	const { user } = useSelector((state) => state.auth);
 	const [photos, setPhotos] = useState([]);
 	const [deadline, setDeadline] = useState(null);
+	const [disabled, setDisabled] = useState(true);
 	const [title, setTitle] = useState(null);
 	const [options, setOptions] = useState([{ title: null }, { title: null }]);
 	const scrollViewRef = useRef(null);
 	const actionSheet = useRef(null);
-
-	const [testUrl, setTestUrl] = useState(null);
 
 	const DareMeTitleScreen = () => {
 		navigation.navigate('DareMe-Create-Title');
@@ -65,17 +65,23 @@ const CreateDareMeScreen = ({ navigation }) => {
   }
 
   const PublishDareMe = async () => {
-  	/*
-  	const filename = photos[0].substring(photos[0].lastIndexOf('/') + 1);
-    const storageRef = storage().ref(`images/${Date.now()}-${filename}`);
+  	try {
+  		const dareme = {
+	  		owner: user.id,
+	  		title: title,
+	  		deadline: deadline,
+	  		photos: photos,
+	  		options: options,
+	  	}
 
-    await storageRef.putFile(photos[0]);
-    console.log('Image uploaded successfully!');
-    const url = await storageRef.getDownloadURL();
-    console.log(url)
-    setTestUrl(url);
-    */
+	  	await CreateDareMe(dareme);
+	  	dispatch({ type: SET_DAREME_INITIAL });
+	  	navigation.navigate('Home');
+  	} catch (err) {
+  		console.log(err);
+  	}
   }
+
 
   useEffect(() => {
   	setDeadline(dareme.deadline);
@@ -83,6 +89,14 @@ const CreateDareMeScreen = ({ navigation }) => {
   	setOptions(dareme.options);
   	setPhotos(dareme.photos);
   }, [dareme]);
+
+  useEffect(() => {
+  	if(deadline && title && photos.length > 0 && options[0].title && options[1].title) {
+  		setDisabled(false);
+  	} else {
+  		setDisabled(true);
+  	}
+  }, [deadline, options, photos, title])
 
 	return (
 		<ScrollView ref={scrollViewRef} vertical style={{ backgroundColor: '#FFFFFF' }}>
@@ -162,7 +176,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 					<PrimaryButton 
 						text="Publish" 
 						width={320}
-						disabled={true} 
+						disabled={disabled} 
 						onPress={PublishDareMe} 
 					/>
 				</View>

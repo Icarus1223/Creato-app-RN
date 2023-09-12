@@ -7,6 +7,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { AuthProvider } from "./src/utils/AuthContext.tsx";
 import { store } from "./src/redux/store";
 
+
 import Header from "./src/components/Header";
 import HomeScreen from "./src/screens/Home";
 
@@ -21,9 +22,7 @@ import DareMeResultScreen from "./src/screens/DareMe/Result";
 
 import FanwallPostScreen from "./src/screens/Fanwall/Post";
 import FanwallDetailScreen from "./src/screens/Fanwall/Detail";
-
 import AuthScreen from "./src/screens/Auth";
-
 import ProfileScreen from "./src/screens/Profile";
 
 const Stack = createNativeStackNavigator();

@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+
   useEffect(() => {
     const getToken = async () => {
       const token = await storage.getItem("accessToken");

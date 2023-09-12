@@ -10,8 +10,8 @@ const PrimaryButton = ({ text, rounded, onPress, width, children, outlined, forc
         { 
           width: width ? width : undefined, 
           borderRadius: rounded ? 50 : 8,
-          backgroundColor: disabled ? 'grey' :  forceColor ? forceColor : outlined ? '#FFFFFF' : '#EFA058',
-          borderColor: disabled ? 'grey' : forceColor ? forceColor : '#EFA058'
+          backgroundColor: disabled ? '#E1E0DF' :  forceColor ? forceColor : outlined ? '#FFFFFF' : '#EFA058',
+          borderColor: disabled ? '#E1E0DF' : forceColor ? forceColor : '#EFA058'
         }
       ]} 
       onPress={disabled ? undefined : onPress}
@@ -20,8 +20,10 @@ const PrimaryButton = ({ text, rounded, onPress, width, children, outlined, forc
         {children}
 			  <Text style={[
             styles.buttonText,
-            { color: forceColor ? '#FFFFFF' : outlined ? '#EFA058' : '#FFFFFF' }
-          ]}>{text}</Text>
+            { color: disabled ? '#938D8A' : forceColor ? '#FFFFFF' : outlined ? '#EFA058' : '#FFFFFF' }
+          ]}>
+          {text}
+        </Text>
       </View>
 		</TouchableOpacity>
 	);
