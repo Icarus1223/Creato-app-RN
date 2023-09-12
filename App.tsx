@@ -1,54 +1,14 @@
 import * as React from 'react';
-import {SafeAreaView, View, ScrollView} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { Provider as ReduxProvider } from "react-redux";
-
+import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/utils/AuthContext.tsx";
 import { store } from "./src/redux/store";
-
-
-import Header from "./src/components/Header";
-import HomeScreen from "./src/screens/Home";
-
-//DareMe
-import CreateDareMeScreen from "./src/screens/DareMe/Create";
-import CreateDareMeTitleScreen from "./src/screens/DareMe/Create/title.tsx";
-import CreateDareMeOptionScreen from "./src/screens/DareMe/Create/dareOption.tsx";
-
-import DareMeDetailScreen from "./src/screens/DareMe/Detail";
-import DareMeVoteScreen from "./src/screens/DareMe/Vote";
-import DareMeResultScreen from "./src/screens/DareMe/Result";
-
-import FanwallPostScreen from "./src/screens/Fanwall/Post";
-import FanwallDetailScreen from "./src/screens/Fanwall/Detail";
-import AuthScreen from "./src/screens/Auth";
-import ProfileScreen from "./src/screens/Profile";
-
-const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <ReduxProvider store={store}>
       <AuthProvider>
-        <SafeAreaView style={{ flex: 1 }}>
-          <NavigationContainer>
-            <Header />
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Auth" component={AuthScreen} />
-              <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
-              <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
-              <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
-              <Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
-              <Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
-              <Stack.Screen name="DareMe-Result" component={DareMeResultScreen} />
-              <Stack.Screen name="Fanwall-Post" component={FanwallPostScreen} />
-              <Stack.Screen name="Fanwall-Detail" component={FanwallDetailScreen} />
-              <Stack.Screen name="Profile" component={ProfileScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </SafeAreaView>
+        <Navigation />
       </AuthProvider>
     </ReduxProvider>
   );
