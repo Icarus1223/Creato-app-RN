@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import storage from '@react-native-firebase/storage';
+import { ScrollView, View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useScrollToTop } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,8 @@ const CreateDareMeScreen = ({ navigation }) => {
 	const [options, setOptions] = useState([{ title: null }, { title: null }]);
 	const scrollViewRef = useRef(null);
 	const actionSheet = useRef(null);
-	//const photoActionSheet = useRef(null);
+
+	const [testUrl, setTestUrl] = useState(null);
 
 	const DareMeTitleScreen = () => {
 		navigation.navigate('DareMe-Create-Title');
@@ -42,12 +44,6 @@ const CreateDareMeScreen = ({ navigation }) => {
     actionSheet.current.show();
   }
 
-  /*
-  const showUploadPhotosActionSheet = () => {
-  	photoActionSheet.current.show();
-  }
-  */
-
   const SelectDeadline = (index) => {
   	if(index < 5) {
   		setDeadline(index + 3);
@@ -68,55 +64,18 @@ const CreateDareMeScreen = ({ navigation }) => {
 		});
   }
 
-/*
-  const SelectUploadMethod = (index) => {
-  	if(index === 0) {
-  		ChooseFromDevice();
-  	} else if(index === 1) {
-  		OpenCamera();
-  	}
-  }
+  const PublishDareMe = async () => {
+  	/*
+  	const filename = photos[0].substring(photos[0].lastIndexOf('/') + 1);
+    const storageRef = storage().ref(`images/${Date.now()}-${filename}`);
 
-  const ChooseFromDevice = () => {
-  	const options = {
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
-    };
-
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('Image picker error: ', response.error);
-      } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        console.log(imageUri)
-      }
-    });
+    await storageRef.putFile(photos[0]);
+    console.log('Image uploaded successfully!');
+    const url = await storageRef.getDownloadURL();
+    console.log(url)
+    setTestUrl(url);
+    */
   }
-
-  const OpenCamera = () => {
-		const options = {
-      mediaType: 'photo',
-      includeBase64: false,
-      maxHeight: 2000,
-      maxWidth: 2000,
-    };
-  
-    launchCamera(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled camera');
-      } else if (response.error) {
-        console.log('Camera Error: ', response.error);
-      } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        console.log(imageUri);
-      }
-    });
-  }
-*/
 
   useEffect(() => {
   	setDeadline(dareme.deadline);
@@ -200,7 +159,12 @@ const CreateDareMeScreen = ({ navigation }) => {
 					</View>
 				</View>
 				<View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
-					<PrimaryButton text="Publish" width={320}/>
+					<PrimaryButton 
+						text="Publish" 
+						width={320}
+						disabled={true} 
+						onPress={PublishDareMe} 
+					/>
 				</View>
 			</View>
 			<ActionSheet
@@ -210,14 +174,7 @@ const CreateDareMeScreen = ({ navigation }) => {
         cancelButtonIndex={5}
         onPress={SelectDeadline}
       />
-      {/*<ActionSheet
-      	ref={photoActionSheet}
-        title={'Upload Photos'}
-        options={['Choose from Device', 'Open Camera', 'Cancel']}
-        cancelButtonIndex={2}
-        onPress={SelectUploadMethod}
-      />*/}
-		</ScrollView>
+    </ScrollView>
 	);
 };
 

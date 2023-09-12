@@ -1,19 +1,20 @@
 import React from "react";
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 
-const PrimaryButton = ({ text, rounded, onPress, width, children, outlined, forceColor }) => {
+const PrimaryButton = ({ text, rounded, onPress, width, children, outlined, forceColor, disabled }) => {
 	return (
-		<TouchableOpacity 
+		<TouchableOpacity
+      disabled={disabled}
       style={[
         styles.button, 
         { 
           width: width ? width : undefined, 
           borderRadius: rounded ? 50 : 8,
-          backgroundColor: forceColor ? forceColor : outlined ? '#FFFFFF' : '#EFA058',
-          borderColor: forceColor ? forceColor : '#EFA058'
+          backgroundColor: disabled ? 'grey' :  forceColor ? forceColor : outlined ? '#FFFFFF' : '#EFA058',
+          borderColor: disabled ? 'grey' : forceColor ? forceColor : '#EFA058'
         }
       ]} 
-      onPress={onPress}
+      onPress={disabled ? undefined : onPress}
     >
       <View style={styles.buttonContent}>
         {children}
