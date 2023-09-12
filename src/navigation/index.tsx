@@ -1,6 +1,8 @@
 import {SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Spinner from "react-native-loading-spinner-overlay";
+import { useSelector } from "react-redux";
 
 // Screens
 import Header from "../components/Header";
@@ -19,8 +21,11 @@ import FanwallDetailScreen from "../screens/Fanwall/Detail";
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
+	const { isLoading } = useSelector((state) => state.auth);
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
+			<Spinner visible={isLoading} />
 			<NavigationContainer>
 	      <Header />
 	      <Stack.Navigator screenOptions={{ headerShown: false }}>

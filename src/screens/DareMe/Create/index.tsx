@@ -7,7 +7,7 @@ import ActionSheet from "react-native-actionsheet";
 import ImagePicker from 'react-native-image-crop-picker';
 import { SliderBox } from "react-native-image-slider-box";
 import { CreateDareMe } from "../../../firebase";
-import { SET_DAREME, SET_DAREME_INITIAL } from "../../../redux/actionTypes";
+import { SET_DAREME, SET_DAREME_INITIAL, SET_LOADING } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import { AddIconSvg, EditIconSvg } from "../../../assets/svg";
 import DareOption from "../../../components/DareOption";
@@ -66,6 +66,7 @@ const CreateDareMeScreen = ({ navigation }) => {
 
   const PublishDareMe = async () => {
   	try {
+  		dipsatch({ type: SET_LOADING, payload: true });
   		const dareme = {
 	  		owner: user.id,
 	  		title: title,
@@ -75,9 +76,11 @@ const CreateDareMeScreen = ({ navigation }) => {
 	  	}
 
 	  	await CreateDareMe(dareme);
+	  	dipsatch({ type: SET_LOADING, payload: false });
 	  	dispatch({ type: SET_DAREME_INITIAL });
 	  	navigation.navigate('Home');
   	} catch (err) {
+  		dipsatch({ type: SET_LOADING, payload: false });
   		console.log(err);
   	}
   }
