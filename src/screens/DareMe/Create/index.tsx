@@ -66,17 +66,18 @@ const CreateDareMeScreen = ({ navigation }) => {
 
   const PublishDareMe = async () => {
   	try {
-  		dipsatch({ type: SET_LOADING, payload: true });
+  		dispatch({ type: SET_LOADING, payload: true });
   		const dareme = {
 	  		owner: user.id,
 	  		title: title,
 	  		deadline: deadline,
 	  		photos: photos,
 	  		options: options,
+	  		finished: false
 	  	}
 
 	  	await CreateDareMe(dareme);
-	  	dipsatch({ type: SET_LOADING, payload: false });
+	  	dispatch({ type: SET_LOADING, payload: false });
 	  	dispatch({ type: SET_DAREME_INITIAL });
 	  	navigation.navigate('Home');
   	} catch (err) {

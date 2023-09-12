@@ -2,10 +2,13 @@ import React, { useRef, useCallback } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Button, Dimensions, StyleSheet, Text } from "react-native";
 import Carousel from 'react-native-snap-carousel';
+import { useSelector } from "react-redux";
+import { GetAllDareMes } from "../../redux/actions/daremeAction";
 import DareMeCard from "../../components/DareMeCard";
 import FanwallCard from "../../components/FanwallCard";
 
 const HomeScreen = ({ navigation }) => {
+  const { daremes } = useSelector((state) => state.dareme);
   const width = Dimensions.get('window').width;
   const scrollViewRef = useRef(null);
 
@@ -27,29 +30,6 @@ const HomeScreen = ({ navigation }) => {
     },
   ]
 
-  const finishedDareme = [
-    {
-        title:"Finished Dareme Title 1",
-        finished: true
-    },
-    {
-        title:"Finished Dareme Title 2",
-        finished: true
-    },
-    {
-        title:"Finished Dareme Title 3",
-        finished: true
-    },
-    {
-        title:"Finished Dareme Title 4",
-        finished: true
-    },
-    {
-        title:"Finished Dareme Title 5",
-        finished: true
-    },
-  ]
-
   const scrollToTop = () => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({ y: 0, animated: true });
@@ -59,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       scrollToTop();
+      GetAllDareMes();
     }, [])
   );
 
@@ -76,25 +57,29 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Ongoing DareMe 🙌🏻</Text>
       </View>
       <View style={styles.sectionContainer}>
+      {daremes.filter((dareme) => !dareme.finished).length > 0 ?
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={carouselItems}
+          data={daremes.filter((dareme) => !dareme.finished)}
           renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}
-        />
+        /> : <Text style={{ fontSize: 16, textAlign: 'center', marginTop: 8 }}>No Ongoing DareMes</Text>
+     }
       </View>
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Finished DareMe</Text>
       </View>
       <View style={styles.sectionContainer}>
-        <Carousel
+      {daremes.filter((dareme) => dareme.finished).length > 0 ?
+         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={finishedDareme}
+          data={daremes.filter((dareme) => dareme.finished)}
           renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}
-        />
+        /> : <Text style={{ fontSize: 16, textAlign: 'center', marginTop: 8 }}>No Finished DareMes</Text>
+      }
       </View>
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Posts on Fanwall</Text>

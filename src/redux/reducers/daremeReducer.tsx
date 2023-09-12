@@ -1,4 +1,4 @@
-import { SET_DAREME, SET_DAREME_INITIAL } from "../actionTypes";
+import { SET_DAREME, SET_DAREMES, SET_DAREME_INITIAL } from "../actionTypes";
 
 const initialState = {
   dareme: {
@@ -13,7 +13,8 @@ const initialState = {
         title: null
       }
     ]
-  }
+  },
+  daremes: []
 };
 
 export const daremeReducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ export const daremeReducer = (state = initialState, action) => {
       return {
         ...state,
         dareme: payload
+      }
+    case SET_DAREMES:
+      return {
+        ...state,
+        daremes: payload
       }
     case SET_DAREME_INITIAL:
       return {

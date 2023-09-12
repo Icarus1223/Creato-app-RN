@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
@@ -9,8 +9,36 @@ import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg 
 const DareMeCard = ({ data }) => {
 	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
-	const { title, finished } = data;
-	const photos = ['https://loremflickr.com/324/576/flower', 'https://loremflickr.com/324/576/hongkong'];
+	const { title, finished, photos, owner, options, createdAt, deadline } = data;
+
+	const timeLeft = useMemo(() => {
+		if(finished) return 'End';
+		else return deadline ? deadline : '4 days'
+	}, [finished, createdAt, deadline]);
+
+	const totalDonuts = useMemo(() => {
+		if(options) {
+			return options.reduce((count, current) => {
+				if(current.voteInfo) {
+					return count;
+				}	else return count;
+			}, 0);
+		} else return 0
+	}, [options]);
+
+	const totalVoters = useMemo(() => {
+		if(options) {
+			const voters = new Set();
+			options.forEach((option) => {
+				if(option.voteInfo) {
+					options.voteInfo.forEach((vote) => {
+						voters.add(vote.voter);
+					})
+				}
+			});
+			return voters.size;
+		} else return 0;
+	}, [options]);
 
 	const DareMeHandleClick = () => {
 		navigation.navigate(finished ? 'DareMe-Result' : 'DareMe-Detail');
@@ -23,10 +51,12 @@ const DareMeCard = ({ data }) => {
 	return (
 		<View>
 			<View style={styles.imageContainer}>
-				<Image
-					style={{ position: 'absolute',  width: 324, height: 576, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
-					source={{ uri: photos[index] }}
-				/>
+				{photos ?
+					<Image
+						style={{ position: 'absolute',  width: 324, height: 576, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+						source={{ uri: photos[index] }}
+					/> : null
+				}
 				<View style={styles.containerHeader}>
 					<View>
 						<Text style={styles.leftTime}>7 Days</Text>
@@ -34,15 +64,15 @@ const DareMeCard = ({ data }) => {
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<View style={{ flexDirection: 'row' }}>
 							<SvgXml xml={DonutIconSvg('white')} />
-							<Text style={styles.voteInfoText}>1,000</Text>
+							<Text style={styles.voteInfoText}>{totalDonuts.toLocaleString()}</Text>
 						</View>
 						<View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5 }}>
 							<SvgXml xml={UserGroupIconSvg('white')} />
-							<Text style={styles.voteInfoText}>20</Text>
+							<Text style={styles.voteInfoText}>{totalVoters.toLocaleString()}</Text>
 						</View>
 					</View>
 				</View>
-				{photos.length === 2 ?
+				{photos && photos.length === 2 ?
 					<View style={styles.arrowContainer}>
 						{index === 1 ?
 							<TouchableOpacity onPress={() => setIndex((i) => (i - 1)%2)}>
@@ -66,10 +96,10 @@ const DareMeCard = ({ data }) => {
 			<View style={styles.toolContainer}>
 				<TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
 					<View style={styles.avatarContainer}>
-							<Avatar />
+						<Avatar username={owner?.name} avatar={owner?.avatar}/>
 					</View>
 					<View style={styles.username}>
-						<Text>James</Text>
+						<Text>{owner?.name}</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
