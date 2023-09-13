@@ -69,7 +69,11 @@ const DareMeCard = ({ data }) => {
 	}
 
 	const ProfileScreen = () => {
-		navigation.navigate('Profile');
+		navigation.navigate('Profile', {
+			id: owner.id,
+			name: owner.name,
+			avatar: owner.avatar
+		});
 	}
 
 	return (

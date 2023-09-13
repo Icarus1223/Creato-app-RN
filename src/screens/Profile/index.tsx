@@ -30,8 +30,8 @@ const DareMeTab = ({ items }) => {
 	        renderItem={renderItem}
 	        sliderWidth={width}
 	        itemWidth={320}
-	       /> : 
-	       <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 15 }}>No Published DareMes</Text>
+	      /> : 
+	      <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 15 }}>No Published DareMes</Text>
     	}
     </ScrollView>
   );
@@ -52,7 +52,7 @@ const FanwallTab = ({ items }) => {
         renderItem={renderItem}
         sliderWidth={width}
         itemWidth={320}
-       />
+      />
     </ScrollView>
   );
 };
@@ -94,7 +94,7 @@ const ProfileScreen = ({ navigation, route }) => {
   useFocusEffect(
     useCallback(() => {
       GetProfileScreenData();
-    }, [])
+    }, [id])
   );
 
 	return (
