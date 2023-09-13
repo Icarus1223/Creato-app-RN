@@ -28,23 +28,23 @@ const Navigation = () => {
 		<SafeAreaView style={{ flex: 1 }}>
 			<Spinner visible={isLoading} />
 			<NavigationContainer>
-	      <Header />
-	      <MenuBar />
-	      <Stack.Navigator screenOptions={{ headerShown: false }}>
-	        <Stack.Screen name="Home" component={HomeScreen} />
-	        <Stack.Screen name="Auth" component={AuthScreen} />
-	        <Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
-	        <Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
-	        <Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
-	        <Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
-	        <Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
-	        <Stack.Screen name="DareMe-Result" component={DareMeResultScreen} />
-	        <Stack.Screen name="Fanwall-Post" component={FanwallPostScreen} />
-	        <Stack.Screen name="Fanwall-Detail" component={FanwallDetailScreen} />
-	        <Stack.Screen name="Profile" component={ProfileScreen} />
-	      </Stack.Navigator>
-	    </NavigationContainer>
-    </SafeAreaView>
+			  <Header />
+			  <MenuBar />
+			  <Stack.Navigator screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="Home" component={HomeScreen} />
+				<Stack.Screen name="Auth" component={AuthScreen} />
+				<Stack.Screen name="DareMe-Create" component={CreateDareMeScreen} />
+				<Stack.Screen name="DareMe-Create-Title" component={CreateDareMeTitleScreen} />
+				<Stack.Screen name="DareMe-Create-DareOption" component={CreateDareMeOptionScreen} />
+				<Stack.Screen name="DareMe-Detail" component={DareMeDetailScreen} />
+				<Stack.Screen name="DareMe-Vote" component={DareMeVoteScreen} />
+				<Stack.Screen name="DareMe-Result" component={DareMeResultScreen} />
+				<Stack.Screen name="Fanwall-Post" component={FanwallPostScreen} />
+				<Stack.Screen name="Fanwall-Detail" component={FanwallDetailScreen} />
+				<Stack.Screen name="Profile" component={ProfileScreen} />
+			  </Stack.Navigator>
+			</NavigationContainer>
+		</SafeAreaView>
 	);
 };
 

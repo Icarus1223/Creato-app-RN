@@ -1,9 +1,12 @@
-import React from "react";
+import { Image } from "react-native";
 import UserAvatar from "react-native-user-avatar";
 
-const Avatar = ({ username, size, avatar }) => {
+const Avatar = ({ size, avatar }) => {
 	return (
-		<UserAvatar size={size ? size : 35} name={username ? username : ''} src={avatar ? avatar : ''} />
+		<Image
+			style={{ width: size, height: size, borderRadius: 50 }}
+			source={{ uri: avatar }}
+		/> 
 	);
 };
 

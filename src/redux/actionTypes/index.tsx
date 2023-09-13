@@ -4,3 +4,4 @@ export const SET_USER = 'SET_USER';
 export const SET_DAREME = 'SET_DAREME';
 export const SET_DAREMES = 'SET_DAREMES';
 export const SET_DAREME_INITIAL = 'SET_DAREME_INITIAL';
+export const SET_OPTION = 'SET_OPTION';

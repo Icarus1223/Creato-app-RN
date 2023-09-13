@@ -51,7 +51,7 @@ const FanwallCard = ({ data }) => {
 			<View style={styles.toolContainer}>
 				<TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
 					<View style={styles.avatarContainer}>
-							<Avatar />
+						<Avatar size={35}/>
 					</View>
 					<View style={styles.username}>
 						<Text>James</Text>

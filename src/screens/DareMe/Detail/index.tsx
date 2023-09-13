@@ -1,12 +1,13 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, { useState, useRef, useCallback, useMemo, useContext } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { SvgXml } from "react-native-svg";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_LOADING } from "../../../redux/actionTypes";
-import { GetDareMeById } from "../../../redux/actions/daremeAction";
+import { AuthContext } from "../../../utils/AuthContext"
 import Avatar from "../../../components/common/Avatar";
+import { SET_LOADING, SET_OPTION } from "../../../redux/actionTypes";
+import { GetDareMeById } from "../../../redux/actions/daremeAction";
 import DareOption from "../../../components/DareOption";
 import { PrimaryButton } from "../../../components/common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
@@ -16,9 +17,18 @@ const DareMeDetailScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { dareme } = useSelector(state => state.dareme);
   const scrollViewRef = useRef(null);
+  const { isAuthenticated } = useContext(AuthContext);
 
-  const DareMeVoteScreen  = () => {
-    navigation.navigate('DareMe-Vote');
+  const DareMeVoteScreen  = (index) => {
+    if(isAuthenticated) {
+      dispatch({ type: SET_OPTION, payload: dareme.options[index] })
+      navigation.navigate('DareMe-Vote', {
+        daremeId: id,
+        optionIndex: index,
+        username: dareme.owner.name,
+        ownerId: dareme.owner.id
+      });
+    } else navigation.navigate('Auth')
     scrollToTop();
   }
 
@@ -70,6 +80,9 @@ const DareMeDetailScreen = ({ navigation, route }) => {
     if(dareme.options) {
       return dareme.options.reduce((count, current) => {
         if(current.voteInfo) {
+          current.voteInfo.forEach((vote) => {
+            count += vote.amount;
+          })
           return count;
         } else return count;
       }, 0);
@@ -117,7 +130,7 @@ const DareMeDetailScreen = ({ navigation, route }) => {
         {dareme.owner ? 
           <View style={styles.imageContainer}>
             <SliderBox
-              images={dareme.photos}
+              images={dareme.photos.length > 0 ? dareme.photos : []}
               sliderBoxHeight={576}
               parentWidth={324}
               ImageComponentStyle={{ borderRadius: 10 }}
@@ -154,7 +167,7 @@ const DareMeDetailScreen = ({ navigation, route }) => {
           <View style={styles.toolContainer}>
             <TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
               <View style={styles.avatarContainer}>
-                <Avatar username={dareme.owner.name} avatar={dareme.owner.avatar}/>
+                <Avatar avatar={dareme.owner.avatar} size={35} />
               </View>
               <View style={styles.username}>
                 <Text>{dareme.owner.name}</Text>
@@ -167,14 +180,16 @@ const DareMeDetailScreen = ({ navigation, route }) => {
               <DareOption 
                 title={dareme.options[0].title}
                 username={dareme.owner.name}
-                onPress={DareMeVoteScreen} 
+                onPress={() => DareMeVoteScreen(0)} 
+                voteInfo={dareme.options[0].voteInfo}
               />
             </View>
             <View style={{ marginVertical: 5 }}>
               <DareOption 
                 title={dareme.options[1].title}
                 username={dareme.owner.name}
-                onPress={DareMeVoteScreen}
+                onPress={() => DareMeVoteScreen(1)}
+                voteInfo={dareme.options[1].voteInfo}
               />
             </View>
           </View> : null }

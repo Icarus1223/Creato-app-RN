@@ -55,7 +55,7 @@ const Header = () => {
 							<Text style={styles.donutCount}>{user ? user.balance.toLocaleString() : null }</Text>
 						</View>
 						<TouchableOpacity onPress={ProfileScreen}>
-							<Avatar username={user ? user.name : null} avatar={user ? user.avatar : null}/>
+							<Avatar avatar={user ? user.avatar : null} size={35} />
 						</TouchableOpacity>
 					</View>
 				:

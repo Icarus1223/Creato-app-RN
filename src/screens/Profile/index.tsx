@@ -101,7 +101,7 @@ const ProfileScreen = ({ navigation, route }) => {
 		<View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
       <View style={styles.profileMenu}>
         <View style={styles.avatarContainer}>
-          <Avatar size={45} username={name ? name : undefined} avatar={avatar ? avatar : undefined} />
+          <Avatar size={45} avatar={avatar ? avatar : undefined} />
           <Text style={styles.username}>{name ? name : ''}</Text>
         </View>
       </View>

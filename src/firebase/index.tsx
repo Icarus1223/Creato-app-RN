@@ -130,3 +130,37 @@ export const GetDareMeById = async (daremeId) => {
 
 	return { id: daremeId, ...data };
 }
+
+export const VoteDareOption = async (daremeId, optionIndex, voterId, amount) => {
+	const daremeRef = firestore().collection('daremes');
+	const daremeSnapshot = await daremeRef.doc(daremeId).get();
+	const userRef = firestore().collection('users');
+	const userSnapshot = await userRef.doc(voterId).get();
+
+	if(daremeSnapshot.empty || userSnapshot.empty) {
+		return null;
+	}
+
+	let data = daremeSnapshot.data();
+	let option = data.options[optionIndex];
+	const voteInfo = option.voteInfo ? option.voteInfo : []
+	voteInfo.push({ voter: voterId, amount: amount, votedAt: Date.now() });
+	option = {
+		...option,
+		voteInfo: voteInfo
+	}
+
+	data.options[optionIndex] = option;
+
+	let userData = userSnapshot.data();
+
+	await daremeRef.doc(daremeId).update({
+		options: data.options
+	});
+
+	await userRef.doc(voterId).update({
+		balance: userData.balance - amount
+	})
+
+	return option;
+}

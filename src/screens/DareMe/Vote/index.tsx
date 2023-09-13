@@ -1,26 +1,46 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { useSelector, useDispatch } from "react-redux";
 import DareOption from "../../../components/DareOption";
+import { VoteDareMe } from "../../../redux/actions/daremeAction";
+import { SET_LOADING, SET_USER } from "../../../redux/actionTypes";
 import { PrimaryButton } from "../../../components/common/Button";
 import CustomMoal from "../../../components/common/Modal";
 import { DonutIconSvg, UserGroupIconSvg, BackIconSvg } from "../../../assets/svg";
 
-const DareMeVoteScreen = ({ navigation }) => {
+const DareMeVoteScreen = ({ navigation, route }) => {
+  const { daremeId, optionIndex, username, ownerId } = route.params;
   const [visible, setVisible] = useState(false);
+  const [votable, setVotable] = useState(false);
   const [donut, setDonut] = useState(null);
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
+  const { option } = useSelector(state => state.dareme);
 
   const DareMeDetailScreen = () => {
-    navigation.navigate('DareMe-Detail');
+    navigation.navigate('DareMe-Detail', { id: daremeId });
   }
 
   const VoteModalOpen = (count) => {
-    setDonut(count);
-    setVisible(true);
+    if(ownerId === user.id) setVotable(true);
+    else {
+      setDonut(count);
+      setVisible(true);
+    }
   }
 
-  const VoteDareOption = () => {
-    setVisible(false);
+  const VoteDareOption = async () => {
+    try {
+      setVisible(false);
+      dispatch({ type: SET_LOADING, payload: true });
+      await VoteDareMe(daremeId, optionIndex, user.id, donut);
+      dispatch({ type: SET_LOADING, payload: false });
+      dispatch({ type: SET_USER, payload: { ...user, balance: user.balance - donut } });
+    } catch (err) {
+      dispatch({ type: SET_LOADING, payload: false });
+      console.log(err);
+    }
   }
 
   return (
@@ -38,9 +58,10 @@ const DareMeVoteScreen = ({ navigation }) => {
         <View style={styles.optionContainer}>
           <View style={{ marginVertical: 5 }}>
             <DareOption 
-              title={"1st Dare Option"}
-              username="James"
-              onPress={() => {}} 
+              title={option?.title}
+              username={username}
+              onPress={() => {}}
+              voteInfo={option.voteInfo ? option.voteInfo : undefined}
             />
           </View>
           <View style={{ marginTop: 20 }}>
@@ -67,9 +88,19 @@ const DareMeVoteScreen = ({ navigation }) => {
         title={"Vote"}
       >
         <Text style={styles.donutCount}>{donut ? donut : ''} donut{donut === 10 ? 's' : ''} For:</Text>
-        <Text style={styles.optionTitle}>Dare option title</Text>
+        <Text style={styles.optionTitle}>{option?.title}</Text>
         <View style={{ marginTop: 10, justifyContent: 'center', flexDirection: 'row' }}>
           <PrimaryButton width={200} text="Confirm" onPress={VoteDareOption} />
+        </View>
+      </CustomMoal>
+      <CustomMoal
+        visible={votable}
+        setVisible={setVotable}
+        title={"Oops!"}
+      >
+        <Text style={styles.donutCount}>You can not vote in own DareMe.</Text>
+        <View style={{ marginTop: 10, justifyContent: 'center', flexDirection: 'row' }}>
+          <PrimaryButton width={200} text="Cancel" onPress={() => setVotable(false)} />
         </View>
       </CustomMoal>
     </ScrollView>

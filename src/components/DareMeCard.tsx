@@ -44,8 +44,11 @@ const DareMeCard = ({ data }) => {
 		if(options) {
 			return options.reduce((count, current) => {
 				if(current.voteInfo) {
+					current.voteInfo.forEach((vote) => {
+						count += vote.amount;
+					})
 					return count;
-				}	else return count;
+				} else return count;
 			}, 0);
 		} else return 0
 	}, [options]);
@@ -55,7 +58,7 @@ const DareMeCard = ({ data }) => {
 			const voters = new Set();
 			options.forEach((option) => {
 				if(option.voteInfo) {
-					options.voteInfo.forEach((vote) => {
+					option.voteInfo.forEach((vote) => {
 						voters.add(vote.voter);
 					})
 				}
@@ -124,7 +127,7 @@ const DareMeCard = ({ data }) => {
 			<View style={styles.toolContainer}>
 				<TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
 					<View style={styles.avatarContainer}>
-						<Avatar username={owner?.name} avatar={owner?.avatar}/>
+						<Avatar avatar={owner?.avatar} size={35}/>
 					</View>
 					<View style={styles.username}>
 						<Text>{owner?.name}</Text>
