@@ -6,7 +6,7 @@ import { AuthContext } from "../utils/AuthContext"
 import { PrimaryButton } from "../components/common/Button";
 import Avatar from "../components/common/Avatar";
 import { SvgXml } from "react-native-svg";
-import { SET_OPEN_MENUBAR } from "../redux/actionTypes";
+import { SET_OPEN_MENUBAR, SET_DAREME_INITIAL } from "../redux/actionTypes";
 import { CreatoLogoSvg, DonutIconSvg, AddIconSvg } from "../assets/svg";
 
 const Header = () => {
@@ -24,6 +24,7 @@ const Header = () => {
 	}
 
 	const CreateDareMeScreen = () => {
+		dispatch({ type: SET_DAREME_INITIAL });
 		navigation.navigate('DareMe-Create');
 	}
 

@@ -9,7 +9,7 @@ import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg 
 const DareMeCard = ({ data }) => {
 	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
-	const { title, finished, photos, owner, options, createdAt, deadline } = data;
+	const { title, finished, photos, owner, options, createdAt, deadline, id } = data;
 
 	const timeLeft = useMemo(() => {
 		if(finished) return 'Ended';
@@ -65,7 +65,7 @@ const DareMeCard = ({ data }) => {
 	}, [options]);
 
 	const DareMeHandleClick = () => {
-		navigation.navigate(finished ? 'DareMe-Result' : 'DareMe-Detail');
+		navigation.navigate(finished ? 'DareMe-Result' : 'DareMe-Detail', { id: id });
 	}
 
 	const ProfileScreen = () => {

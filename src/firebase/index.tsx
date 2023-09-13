@@ -37,12 +37,15 @@ const UploadFile = async (url) => {
 }
 
 export const CreateDareMe = async (newDareme) => {
+	const uploadFuncs = []
 	if(newDareme.photos[0]) {
-		newDareme.photos[0] = await UploadFile(newDareme.photos[0]);
+		uploadFuncs.push(UploadFile(newDareme.photos[0]));
 	}
 	if(newDareme.photos[1]) {
-		newDareme.photos[1] = await UploadFile(newDareme.photos[1]);
+		uploadFuncs.push(UploadFile(newDareme.photos[1]));
 	}
+
+	newDareme.photos = await Promise.all(uploadFuncs);
 
 	const dareme = {
 		...newDareme,
@@ -105,4 +108,25 @@ export const GetDareMesByUser = async (userId) => {
 
 	const daremes = await Promise.all(daremesPromises);
 	return daremes;
+}
+
+export const GetDareMeById = async (daremeId) => {
+	const daremeRef = firestore().collection('daremes');
+	const daremeSnapshot = await daremeRef.doc(daremeId).get();
+
+	if(daremeSnapshot.empty) {
+		return null;
+	}
+
+	const data = daremeSnapshot.data();
+	const userRef = firestore().collection('users');
+	const userSnapshot = await userRef.doc(data.owner).get();
+
+	if(userSnapshot.empty) {
+		data.owner = null
+	} else {
+		data.owner = { id: userSnapshot.id, ...userSnapshot.data() }
+	}
+
+	return { id: daremeId, ...data };
 }
