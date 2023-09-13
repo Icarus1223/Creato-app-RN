@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 // Screens
 import Header from "../components/Header";
+import MenuBar from "../components/MenuBar";
 import HomeScreen from "../screens/Home";
 import AuthScreen from "../screens/Auth";
 import ProfileScreen from "../screens/Profile";
@@ -28,6 +29,7 @@ const Navigation = () => {
 			<Spinner visible={isLoading} />
 			<NavigationContainer>
 	      <Header />
+	      <MenuBar />
 	      <Stack.Navigator screenOptions={{ headerShown: false }}>
 	        <Stack.Screen name="Home" component={HomeScreen} />
 	        <Stack.Screen name="Auth" component={AuthScreen} />

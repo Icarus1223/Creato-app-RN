@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import auth from '@react-native-firebase/auth';
 import { useDispatch } from "react-redux";
+import { LogOut } from "../redux/actions/authAction";
 import { storage } from "./storage";
 import { SET_USER } from "../redux/actionTypes";
 import { GoogleLogin, getUserByEmail } from "../firebase";
@@ -22,8 +23,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const logout = (navigation) => {
     setIsAuthenticated(false);
+    LogOut(navigation);
   };
 
 

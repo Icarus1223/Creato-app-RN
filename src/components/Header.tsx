@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from "react-redux";
 import { AuthContext } from "../utils/AuthContext"
 import { PrimaryButton } from "../components/common/Button";
 import Avatar from "../components/common/Avatar";
 import { SvgXml } from "react-native-svg";
+import { SET_OPEN_MENUBAR } from "../redux/actionTypes";
 import { CreatoLogoSvg, DonutIconSvg, AddIconSvg } from "../assets/svg";
 
 const Header = () => {
-	const user = useSelector((state) => state.auth.user);
-	const { isAuthenticated } = useContext(AuthContext);
 	const navigation = useNavigation();
+	const dispatch = useDispatch();
+	const { user, isOpenedMenuBar } = useSelector((state) => state.auth);
+	const { isAuthenticated } = useContext(AuthContext);
 
 	const LoginScreen = () => {
 		navigation.navigate('Auth');
@@ -26,7 +28,7 @@ const Header = () => {
 	}
 
 	const ProfileScreen = () => {
-		navigation.navigate('Profile');
+		dispatch({ type: SET_OPEN_MENUBAR, payload: !isOpenedMenuBar })
 	}
 
 	useEffect(() => {
@@ -68,7 +70,7 @@ const Header = () => {
 const styles = StyleSheet.create({
 	container: {
 		borderBottomWidth: 2,
-    	borderBottomColor: '#BCB6A9'
+    borderBottomColor: '#BCB6A9'
 	},
 	header: {
 		flexDirection: 'row',
@@ -85,8 +87,8 @@ const styles = StyleSheet.create({
 	logoText: {
 		marginLeft: 15,
 		fontSize: 24,
-    	lineHeight: 28,
-    	fontWeight: 600,
+    lineHeight: 28,
+    fontWeight: 600,
 	},
 	avatar: {
 		height: 54,

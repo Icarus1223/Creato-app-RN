@@ -12,9 +12,33 @@ const DareMeCard = ({ data }) => {
 	const { title, finished, photos, owner, options, createdAt, deadline } = data;
 
 	const timeLeft = useMemo(() => {
-		if(finished) return 'End';
-		else return deadline ? deadline : '4 days'
-	}, [finished, createdAt, deadline]);
+		if(finished) return 'Ended';
+		else {
+			if(deadline && createdAt) {
+				const values = [3600 * 24, 3600, 60];
+				const units = ["day", "hour", "min"];
+				const time = values[0] * deadline + Math.round(createdAt / 1000) - Math.round(Date.now() / 1000)
+
+				if(time < 0) return 'less than 1 min left';
+
+		    const addUnit = (value, unit) => {
+		        return value.toString() + " " + (value === 1 ? unit : unit + "s");
+		    }
+
+    		let res = "";
+		    units.every((unit: string, index: number) => {
+		        const count = Math.ceil(time / values[index]);
+		        if (count >= 1) {
+		            res += addUnit(count, unit);
+		            return false;
+		        }
+		        return true;
+		    })
+		    res += ' left';
+		    return res;
+		  } else return '';
+		} 	
+	}, [finished, deadline, createdAt]);
 
 	const totalDonuts = useMemo(() => {
 		if(options) {
@@ -59,7 +83,7 @@ const DareMeCard = ({ data }) => {
 				}
 				<View style={styles.containerHeader}>
 					<View>
-						<Text style={styles.leftTime}>7 Days</Text>
+						<Text style={styles.leftTime}>{timeLeft}</Text>
 					</View>
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<View style={{ flexDirection: 'row' }}>

@@ -1,8 +1,9 @@
-import { SET_USER, SET_LOADING } from "../actionTypes";
+import { SET_USER, SET_LOADING, SET_OPEN_MENUBAR } from "../actionTypes";
 
 const initialState = {
   user: null,
   isLoading: false,
+  isOpenedMenuBar: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: payload
+      }
+    case SET_OPEN_MENUBAR:
+      return {
+        ...state,
+        isOpenedMenuBar: payload
       }
     default:
       return state;

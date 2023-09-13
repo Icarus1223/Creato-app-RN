@@ -1,4 +1,5 @@
 export const SET_LOADING = 'SET_LOADING';
+export const SET_OPEN_MENUBAR = 'SET_OPEN_MENUBAR';
 export const SET_USER = 'SET_USER';
 export const SET_DAREME = 'SET_DAREME';
 export const SET_DAREMES = 'SET_DAREMES';
