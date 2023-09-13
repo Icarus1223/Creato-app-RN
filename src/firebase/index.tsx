@@ -58,7 +58,34 @@ export const GetAllDareMes = async () => {
 	const daremeSnapshot = await daremeRef.get();
 
 	if(daremeSnapshot.empty) {
-		return null;
+		return [];
+	}
+
+	const daremesPromises = await daremeSnapshot.docs.map(async(doc) => {
+		const daremeId = doc.id;
+		const data = doc.data();
+		const userRef = firestore().collection('users');
+		const userSnapshot = await userRef.doc(data.owner).get();
+
+		if(userSnapshot.empty) {
+			data.owner = null
+		} else {
+			data.owner = { id: userSnapshot.id, ...userSnapshot.data() }
+		}
+
+		return { id: daremeId, ...data };
+	})
+
+	const daremes = await Promise.all(daremesPromises);
+	return daremes;
+}
+
+export const GetDareMesByUser = async (userId) => {
+	const daremeRef = firestore().collection('daremes');
+	const daremeSnapshot = await daremeRef.where('owner', '==', userId).get();
+
+	if(daremeSnapshot.empty) {
+		return [];
 	}
 
 	const daremesPromises = await daremeSnapshot.docs.map(async(doc) => {

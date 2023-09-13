@@ -1,13 +1,15 @@
-import React, { useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Button, Dimensions, StyleSheet, Text } from "react-native";
 import Carousel from 'react-native-snap-carousel';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_LOADING } from "../../redux/actionTypes";
 import { GetAllDareMes } from "../../redux/actions/daremeAction";
 import DareMeCard from "../../components/DareMeCard";
 import FanwallCard from "../../components/FanwallCard";
 
 const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { daremes } = useSelector((state) => state.dareme);
   const width = Dimensions.get('window').width;
   const scrollViewRef = useRef(null);
@@ -36,10 +38,21 @@ const HomeScreen = ({ navigation }) => {
     }
   }
 
+  const GetHomeScreenData = async () => {
+    try {
+      dispatch({ type: SET_LOADING, payload: true });
+      await Promise.all([GetAllDareMes()]);
+      dispatch({ type: SET_LOADING, payload: false });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: SET_LOADING, payload: false });
+    }
+  }
+
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       scrollToTop();
-      GetAllDareMes();
+      GetHomeScreenData();
     }, [])
   );
 

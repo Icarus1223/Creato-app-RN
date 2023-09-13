@@ -12,11 +12,15 @@ import { UserIconSvg } from "../assets/svg";
 const MenuBar = () => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
-	const { isOpenedMenuBar } = useSelector(state => state.auth);
+	const { isOpenedMenuBar, user } = useSelector(state => state.auth);
 	const { logout } = useContext(AuthContext);
 
 	const ProfileScreen = () => {
-		navigation.navigate('Profile');
+		navigation.navigate('Profile', {
+			id: user.id,
+			avatar: user.avatar,
+			name: user.name
+		});
 		dispatch({ type: SET_OPEN_MENUBAR, payload: false });
 	}
 
