@@ -165,13 +165,14 @@ export const VoteDareOption = async (daremeId, optionIndex, voterId, amount) => 
 	return option;
 }
 
-export const PostFanwall = async (daremeId, photo) => {
+export const PostFanwall = async (daremeId, userId, photo) => {
 	const fanwallUrl = await UploadFile(photo)
 	const fanwallRef = firestore().collection('fanwalls');
 
 	const fanwall = {
 		photo: fanwallUrl,
 		dareme: daremeId,
+		owner: userId,
 		createdAt: Date.now()
 	}
 
@@ -195,6 +196,35 @@ export const GetFanwallByDareMeId = async (daremeId) => {
 export const GetAllFanwalls = async () => {
 	const fanwallRef = firestore().collection('fanwalls');
 	const fanwallSnapshot = await fanwallRef.get();
+
+	if(fanwallSnapshot.empty) {
+		return [];
+	}
+
+	const fanwallPromises = await fanwallSnapshot.docs.map(async(doc) => {
+		const fanwallId = doc.id;
+		let data = doc.data();
+
+		const daremeRef = firestore().collection('daremes');
+		const daremeSnapshot = await daremeRef.doc(data.dareme).get();
+
+		let daremeData = { id: daremeSnapshot.id, ...daremeSnapshot.data() }
+		const userRef = firestore().collection('users');
+		const userSnapshot = await userRef.doc(daremeData.owner).get();
+
+		daremeData.owner = { id: userSnapshot.id, ...userSnapshot.data() }
+		data.dareme = daremeData;
+
+		return { id: fanwallId, ...data };
+	})
+
+	const fanwalls = await Promise.all(fanwallPromises);
+	return fanwalls;
+}
+
+export const GetFanwallsByUser = async (userId) => {
+	const fanwallRef = firestore().collection('fanwalls');
+	const fanwallSnapshot = await fanwallRef.where('owner', '==', userId).get();
 
 	if(fanwallSnapshot.empty) {
 		return [];

@@ -10,6 +10,7 @@ import FanwallCard from "../../components/FanwallCard";
 import Avatar from "../../components/common/Avatar";
 import { SET_LOADING } from "../../redux/actionTypes";
 import { GetDareMesByUser } from "../../redux/actions/daremeAction";
+import { GetFanwallsByUser } from "../../redux/actions/fanwallAction";
 import { CreatoLogoSvg, DonutIconSvg, AddIconSvg, DareIconSvg, RewardIconSvg } from "../../assets/svg";
 
 const Tab = createBottomTabNavigator();
@@ -46,13 +47,15 @@ const FanwallTab = ({ items }) => {
 
   return (
     <ScrollView styles={{ backgroundColor: '#FFF' }}>
+    {items.length > 0 ?
     	<Carousel
         containerCustomStyle={{ paddingVertical: 10 }}
         data={items}
         renderItem={renderItem}
         sliderWidth={width}
         itemWidth={320}
-      />
+      /> : <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 15 }}>No Published Posts</Text>
+    }
     </ScrollView>
   );
 };
@@ -61,29 +64,12 @@ const ProfileScreen = ({ navigation, route }) => {
 	const { id, name, avatar } = route.params;
 	const dispatch = useDispatch();
 	const { daremes } = useSelector(state => state.dareme);
-	
-	const carouselItems = [
-    {
-        title:"Item 1",
-    },
-    {
-        title:"Item 2",
-    },
-    {
-        title:"Item 3",
-    },
-    {
-        title:"Item 4",
-    },
-    {
-        title:"Item 5",
-    },
-  ]
+	const { fanwalls } = useSelector(state => state.fanwall);
 
   const GetProfileScreenData = async () => {
   	try {
   		dispatch({ type: SET_LOADING, payload: true });
-  		await Promise.all([GetDareMesByUser(id)])
+  		await Promise.all([GetDareMesByUser(id), GetFanwallsByUser(id)]);
   		dispatch({ type: SET_LOADING, payload: false });
   	} catch (err) {
   		dispatch({ type: SET_LOADING, payload: false });
@@ -129,7 +115,7 @@ const ProfileScreen = ({ navigation, route }) => {
         />
         <Tab.Screen 
         	name="Fanwall"
-        	children={() => <FanwallTab items={carouselItems} />}
+        	children={() => <FanwallTab items={fanwalls} />}
         	options={{ 
         		headerShown: false,
         		tabBarIcon: ({ focused }) => <SvgXml xml={RewardIconSvg(focused ? '#EFA058' : 'gray')} />

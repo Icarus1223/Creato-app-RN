@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ImagePicker from 'react-native-image-crop-picker';
 import DareOption from "../../../components/DareOption";
 import { SET_LOADING } from "../../../redux/actionTypes";
@@ -13,6 +13,7 @@ const FanwallPostScreen = ({ navigation, route }) => {
 	const [photo, setPhoto] = useState(null);
 	const dispatch = useDispatch();
 	const { daremeId, winTitle } = route.params;
+	const { user } = useSelector(state => state.auth);
 
 	const UploadPhoto = () => {
 		ImagePicker.openPicker({
@@ -32,7 +33,7 @@ const FanwallPostScreen = ({ navigation, route }) => {
 	const PostFanwall = async () => {
 		try {
 			dispatch({ type: SET_LOADING, payload: true });
-			await CreateFanwall(daremeId, photo);
+			await CreateFanwall(daremeId, user.id ,photo);
 			dispatch({ type: SET_LOADING, payload: false });
 			navigation.navigate('Home');
 		} catch(err) {
