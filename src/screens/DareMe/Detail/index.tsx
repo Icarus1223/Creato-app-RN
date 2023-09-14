@@ -21,13 +21,17 @@ const DareMeDetailScreen = ({ navigation, route }) => {
 
   const DareMeVoteScreen  = (index) => {
     if(isAuthenticated) {
-      dispatch({ type: SET_OPTION, payload: dareme.options[index] })
-      navigation.navigate('DareMe-Vote', {
-        daremeId: id,
-        optionIndex: index,
-        username: dareme.owner.name,
-        ownerId: dareme.owner.id
-      });
+      if(dareme.finished) {
+        navigation.navigate('DareMe-Result');
+      } else {
+        dispatch({ type: SET_OPTION, payload: dareme.options[index] })
+        navigation.navigate('DareMe-Vote', {
+          daremeId: id,
+          optionIndex: index,
+          username: dareme.owner.name,
+          ownerId: dareme.owner.id
+        });
+      }
     } else navigation.navigate('Auth')
     scrollToTop();
   }

@@ -1,5 +1,5 @@
 import * as Firebase from "../../firebase";
-import { SET_OPTION, SET_DAREMES, SET_DAREME, SET_DAREME_INITIAL } from "../actionTypes";
+import { SET_OPTION, SET_DAREMES, SET_DAREME, SET_DAREME_INITIAL, SET_USER } from "../actionTypes";
 import { store } from "../store";
 
 export const GetAllDareMes = async () => {
@@ -34,11 +34,12 @@ export const GetDareMeById = async (daremeId) => {
 	}
 }
 
-export const VoteDareMe = async (daremeId, optionIndex, voterId, amount) => {
+export const VoteDareMe = async (daremeId, optionIndex, user, amount) => {
 	try {
-		const updatedOption = await Firebase.VoteDareOption(daremeId, optionIndex, voterId, amount);
+		const updatedOption = await Firebase.VoteDareOption(daremeId, optionIndex, user.id, amount);
 		if(updatedOption) {
 			store.dispatch({ type: SET_OPTION, payload: updatedOption });
+			store.dispatch({ type: SET_USER, payload: { ...user, balance: user.balance - amount } });
 		}
 	} catch (err) {
 		console.log(err)

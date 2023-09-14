@@ -34,9 +34,8 @@ const DareMeVoteScreen = ({ navigation, route }) => {
     try {
       setVisible(false);
       dispatch({ type: SET_LOADING, payload: true });
-      await VoteDareMe(daremeId, optionIndex, user.id, donut);
+      await VoteDareMe(daremeId, optionIndex, user, donut);
       dispatch({ type: SET_LOADING, payload: false });
-      dispatch({ type: SET_USER, payload: { ...user, balance: user.balance - donut } });
     } catch (err) {
       dispatch({ type: SET_LOADING, payload: false });
       console.log(err);
