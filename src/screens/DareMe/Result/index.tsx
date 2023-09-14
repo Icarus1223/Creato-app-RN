@@ -15,7 +15,7 @@ const DareMeResultScreen = ({ navigation, route }) => {
   const { dareme } = useSelector(state => state.dareme);
 
 	const FanwallPostScreen = () => {
-		navigation.navigate('Fanwall-Post');
+		navigation.navigate('Fanwall-Post', { daremeId: id, winTitle: dareme.options[winIndex].title });
 	}
 
   const totalDonuts = useMemo(() => {
@@ -44,6 +44,31 @@ const DareMeResultScreen = ({ navigation, route }) => {
       return voters.size;
     } else return 0;
   }, [dareme]);
+
+  const winIndex = useMemo(() => {
+    if(dareme.options) {
+      const firstOptionDonuts = dareme.options[0].voteInfo ? dareme.options[0].voteInfo.reduce((sum, current) => sum + current.amount, 0) : 0;
+      const secondOptionDonuts = dareme.options[1].voteInfo ? dareme.options[1].voteInfo.reduce((sum, current) => sum + current.amount, 0) : 0;
+      if(firstOptionDonuts > secondOptionDonuts) return 0
+      else if(secondOptionDonuts > firstOptionDonuts) return 1
+      else {
+        const firstVoters = new Set();
+        if(dareme.options[0].voteInfo) {
+          dareme.options[0].voteInfo.forEach((vote) => {
+              firstVoters.add(vote.voter);
+          })
+        }
+        const secondVoters = new Set();
+        if(dareme.options[1].voteInfo) {
+          dareme.options[1]?.voteInfo.forEach((vote) => {
+              secondVoters.add(vote.voter);
+          })
+        }
+        if(firstVoters.size >= secondVoters.size) return 0
+        else return 1
+      }
+    }
+  }, [dareme])
 
   const GetDareMeByDareMeId = async () => {
     try {

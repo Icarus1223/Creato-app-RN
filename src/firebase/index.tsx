@@ -160,7 +160,20 @@ export const VoteDareOption = async (daremeId, optionIndex, voterId, amount) => 
 
 	await userRef.doc(voterId).update({
 		balance: userData.balance - amount
-	})
+	});
 
 	return option;
+}
+
+export const PostFanwall = async (daremeId, photo) => {
+	const fanwallUrl = await UploadFile(photo)
+	const fanwallRef = firestore().collection('fanwalls');
+
+	const fanwall = {
+		photo: fanwallUrl,
+		daremeId: daremeId,
+		createdAt: Date.now()
+	}
+
+	await fanwallRef.add(fanwall);
 }

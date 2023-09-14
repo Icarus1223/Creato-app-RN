@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { useDispatch } from "react-redux";
 import ImagePicker from 'react-native-image-crop-picker';
 import DareOption from "../../../components/DareOption";
+import { SET_LOADING } from "../../../redux/actionTypes";
+import { CreateFanwall } from "../../../redux/actions/fanwallAction";
 import { PrimaryButton } from "../../../components/common/Button";
-import { AddIconSvg, RemoveIconSvg } from "../../../assets/svg";
+import { AddIconSvg, RemoveIconSvg, BackIconSvg } from "../../../assets/svg";
 
-const FanwallPostScreen = ({ navigation }) => {
+const FanwallPostScreen = ({ navigation, route }) => {
 	const [photo, setPhoto] = useState(null);
+	const dispatch = useDispatch();
+	const { daremeId, winTitle } = route.params;
 
 	const UploadPhoto = () => {
 		ImagePicker.openPicker({
@@ -24,18 +29,36 @@ const FanwallPostScreen = ({ navigation }) => {
   	setPhoto(null);
   }
 
-	const PostFanwall = () => {
+	const PostFanwall = async () => {
+		try {
+			dispatch({ type: SET_LOADING, payload: true });
+			await CreateFanwall(daremeId, photo);
+			dispatch({ type: SET_LOADING, payload: false });
+			navigation.navigate('Home');
+		} catch(err) {
+			dispatch({ type: SET_LOADING, payload: false });
+			console.log(err)
+		}
+	}
 
+	const DareMeResultScreen = () => {
+		navigation.navigate('DareMe-Result', { id: daremeId });
 	}
 
 	return (
 		<ScrollView vertical style={{ backgroundColor: '#FFFFFF' }}>
 			<View style={{ width: '100%', alignItems: 'center', paddingVertical: 10}}>
         <View style={styles.screenHeader}>
+        	<View style={{ width: 40, height: 40, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={DareMeResultScreen}>
+              <SvgXml xml={BackIconSvg} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.screenTitle}>Posting on Fanwall 🎨️</Text>
+          <View style={{ width: 40, height: 40 }}></View>
         </View>
 				<View style={styles.title}>
-					<Text style={styles.titleText}>Winning DareMe option title</Text>
+					<Text style={styles.titleText}>{winTitle}</Text>
 				</View>
 				<View style={{ marginTop: 20 }}>
 					{photo ?
@@ -55,7 +78,7 @@ const FanwallPostScreen = ({ navigation }) => {
 					}
 				</View>
         <View style={{ marginLeft: 'auto', marginRight: 'auto', marginVertical: 20}}>
-        	<PrimaryButton width={300} text="Post Now" onPress={PostFanwall} />
+        	<PrimaryButton width={300} text="Post Now" onPress={PostFanwall} disabled={photo ? false : true}/>
         </View>
       </View>
 		</ScrollView>
@@ -64,6 +87,7 @@ const FanwallPostScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   screenHeader: {
+  	width: '100%',
     height: 50,
     paddingVertical: 10,
     paddingHorizontal: 15,

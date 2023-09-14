@@ -2,6 +2,15 @@ import * as Firebase from "../../firebase";
 import { SET_OPTION, SET_DAREMES, SET_DAREME, SET_DAREME_INITIAL, SET_USER } from "../actionTypes";
 import { store } from "../store";
 
+export const CreateDareMe = async (dareme) => {
+	try {
+		await Firebase.CreateDareMe(dareme);
+		store.dispatch({ type: SET_DAREME_INITIAL });
+	} catch (err) {
+		console.log(err)
+	}
+} 
+
 export const GetAllDareMes = async () => {
 	try {
 		store.dispatch({ type: SET_DAREMES, payload: [] });
