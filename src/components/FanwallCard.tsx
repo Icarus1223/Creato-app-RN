@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
@@ -9,16 +9,46 @@ import { DonutIconSvg, UserGroupIconSvg } from "../assets/svg";
 const FanwallCard = ({ data }) => {
 	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
-	const { title } = data;
-	const photo = 'https://loremflickr.com/324/576/flower';
+	const { dareme, photo } = data;
 
 	const FanwallHandleClick = () => {
 		navigation.navigate('Fanwall-Detail');
 	}
 
 	const ProfileScreen = () => {
-		navigation.navigate('Profile');
+		navigation.navigate('Profile', {
+			id: dareme.owner.id,
+			name: dareme.owner.name,
+			avatar: dareme.owner.avatar
+		});
 	}
+
+	const totalDonuts = useMemo(() => {
+		if(dareme.options) {
+			return dareme.options.reduce((count, current) => {
+				if(current.voteInfo) {
+					current.voteInfo.forEach((vote) => {
+						count += vote.amount;
+					})
+					return count;
+				} else return count;
+			}, 0);
+		} else return 0
+	}, [dareme]);
+
+	const totalVoters = useMemo(() => {
+		if(dareme.options) {
+			const voters = new Set();
+			dareme.options.forEach((option) => {
+				if(option.voteInfo) {
+					option.voteInfo.forEach((vote) => {
+						voters.add(vote.voter);
+					})
+				}
+			});
+			return voters.size;
+		} else return 0;
+	}, [dareme]);
 
 	return (
 		<View>
@@ -33,16 +63,16 @@ const FanwallCard = ({ data }) => {
 					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
 						<View style={{ flexDirection: 'row' }}>
 							<SvgXml xml={DonutIconSvg('white')} />
-							<Text style={styles.voteInfoText}>1,000</Text>
+							<Text style={styles.voteInfoText}>{totalDonuts.toLocaleString()}</Text>
 						</View>
 						<View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5 }}>
 							<SvgXml xml={UserGroupIconSvg('white')} />
-							<Text style={styles.voteInfoText}>20</Text>
+							<Text style={styles.voteInfoText}>{totalVoters.toLocaleString()}</Text>
 						</View>
 					</View>
 				</View>
 				<View style={styles.title}>
-					<Text style={styles.titleText}>{title}</Text>
+					<Text style={styles.titleText}>{dareme?.title}</Text>
 				</View>
 				<View style={styles.buttonContainer}>
 					<PrimaryButton text="View Post" width={280} onPress={FanwallHandleClick} />
@@ -51,10 +81,10 @@ const FanwallCard = ({ data }) => {
 			<View style={styles.toolContainer}>
 				<TouchableOpacity style={{ flexDirection: 'row' }} onPress={ProfileScreen}>
 					<View style={styles.avatarContainer}>
-						<Avatar size={35}/>
+						<Avatar size={35} avatar={dareme?.owner?.avatar}/>
 					</View>
 					<View style={styles.username}>
-						<Text>James</Text>
+						<Text>{dareme?.owner?.name}</Text>
 					</View>
 				</TouchableOpacity>
 			</View>

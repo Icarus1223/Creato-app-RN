@@ -7,15 +7,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { PrimaryButton } from "../../../components/common/Button";
 import { SET_LOADING } from "../../../redux/actionTypes";
 import { GetDareMeById } from "../../../redux/actions/daremeAction";
+import { GetFanwallByDareMeId } from "../../../redux/actions/fanwallAction";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
 const DareMeResultScreen = ({ navigation, route }) => {
   const { id } = route.params;
   const dispatch = useDispatch();
   const { dareme } = useSelector(state => state.dareme);
+  const { fanwall } = useSelector(state => state.fanwall);
+  const { user } = useSelector(state => state.auth);
+  console.log(fanwall)
 
 	const FanwallPostScreen = () => {
-		navigation.navigate('Fanwall-Post', { daremeId: id, winTitle: dareme.options[winIndex].title });
+    if((dareme.owner && dareme.owner.id == user.id && fanwall == null)) {
+		  navigation.navigate('Fanwall-Post', { daremeId: id, winTitle: dareme.options[winIndex].title });
+    } else {
+      navigation.navigate('Fanwall-Detail', { id: fanwall.id });
+    }
 	}
 
   const totalDonuts = useMemo(() => {
@@ -70,10 +78,10 @@ const DareMeResultScreen = ({ navigation, route }) => {
     }
   }, [dareme])
 
-  const GetDareMeByDareMeId = async () => {
+  const GetDareMeResult = async () => {
     try {
       dispatch({ type: SET_LOADING, payload: true });
-      await GetDareMeById(id);
+      await Promise.all([GetDareMeById(id), GetFanwallByDareMeId(id)]);
       dispatch({ type: SET_LOADING, payload: false });
     } catch (err) {
       dispatch({ type: SET_LOADING, payload: false });
@@ -83,7 +91,7 @@ const DareMeResultScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     useCallback(() => {
-      GetDareMeByDareMeId();
+      GetDareMeResult();
     }, [id])
   );
 
@@ -132,7 +140,11 @@ const DareMeResultScreen = ({ navigation, route }) => {
         </View> : null }
         {dareme.owner ?
         <View style={{ marginLeft: 'auto', marginRight: 'auto'}}>
-        	<PrimaryButton width={280} text="Post on Fanwall" onPress={FanwallPostScreen}/>
+        	<PrimaryButton 
+            width={280} 
+            text={(dareme.owner && dareme.owner.id == user.id && fanwall == null) ? "Post on Fanwall" : "View on Fanwall"} 
+            onPress={FanwallPostScreen}
+          />
         </View>: null }
       </View>
 		</ScrollView>

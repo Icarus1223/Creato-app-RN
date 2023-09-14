@@ -5,3 +5,5 @@ export const SET_DAREME = 'SET_DAREME';
 export const SET_DAREMES = 'SET_DAREMES';
 export const SET_DAREME_INITIAL = 'SET_DAREME_INITIAL';
 export const SET_OPTION = 'SET_OPTION';
+export const SET_FANWALL = 'SET_FANWALL';
+export const SET_FANWALLS = 'SET_FANWALLS';

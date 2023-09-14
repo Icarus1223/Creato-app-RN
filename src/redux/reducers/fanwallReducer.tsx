@@ -1,8 +1,8 @@
-import { SET_FANWALL } from "../actionTypes";
+import { SET_FANWALL, SET_FANWALLS } from "../actionTypes";
 
 const initialState = {
   fanwall: null,
-  daremes: []
+  fanwalls: []
 };
 
 export const fanwallReducer = (state = initialState, action) => {
@@ -12,6 +12,11 @@ export const fanwallReducer = (state = initialState, action) => {
       return {
         ...state,
         fanwall: payload
+      }
+    case SET_FANWALLS:
+      return {
+        ...state,
+        fanwalls: payload
       }
     default:
       return state;

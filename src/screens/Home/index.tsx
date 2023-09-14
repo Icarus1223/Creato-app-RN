@@ -5,32 +5,16 @@ import Carousel from 'react-native-snap-carousel';
 import { useSelector, useDispatch } from "react-redux";
 import { SET_LOADING } from "../../redux/actionTypes";
 import { GetAllDareMes } from "../../redux/actions/daremeAction";
+import { GetAllFanwalls } from "../../redux/actions/fanwallAction";
 import DareMeCard from "../../components/DareMeCard";
 import FanwallCard from "../../components/FanwallCard";
 
 const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { daremes } = useSelector((state) => state.dareme);
+  const { fanwalls } = useSelector(state => state.fanwall);
   const width = Dimensions.get('window').width;
   const scrollViewRef = useRef(null);
-
-  const carouselItems = [
-    {
-        title:"Item 1",
-    },
-    {
-        title:"Item 2",
-    },
-    {
-        title:"Item 3",
-    },
-    {
-        title:"Item 4",
-    },
-    {
-        title:"Item 5",
-    },
-  ]
 
   const scrollToTop = () => {
     if (scrollViewRef.current) {
@@ -41,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
   const GetHomeScreenData = async () => {
     try {
       dispatch({ type: SET_LOADING, payload: true });
-      await Promise.all([GetAllDareMes()]);
+      await Promise.all([GetAllDareMes(), GetAllFanwalls()]);
       dispatch({ type: SET_LOADING, payload: false });
     } catch (err) {
       console.log(err);
@@ -98,13 +82,15 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Posts on Fanwall</Text>
       </View>
       <View style={styles.sectionContainer}>
+      {fanwalls.length > 0 ?
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={carouselItems}
+          data={fanwalls}
           renderItem={renderFanwallCardItem}
           sliderWidth={width}
           itemWidth={320}
-        />
+        /> : <Text style={{ fontSize: 16, textAlign: 'center', marginTop: 8 }}>No Posts</Text>
+      }
       </View>
     </ScrollView>
   );
