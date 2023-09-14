@@ -9,10 +9,10 @@ import { DonutIconSvg, UserGroupIconSvg } from "../assets/svg";
 const FanwallCard = ({ data }) => {
 	const navigation = useNavigation();
 	const [index, setIndex] = useState(0);
-	const { dareme, photo } = data;
+	const { dareme, photo, id } = data;
 
 	const FanwallHandleClick = () => {
-		navigation.navigate('Fanwall-Detail');
+		navigation.navigate('Fanwall-Detail', { id: id });
 	}
 
 	const ProfileScreen = () => {

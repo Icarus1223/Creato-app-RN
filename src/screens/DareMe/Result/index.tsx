@@ -16,7 +16,6 @@ const DareMeResultScreen = ({ navigation, route }) => {
   const { dareme } = useSelector(state => state.dareme);
   const { fanwall } = useSelector(state => state.fanwall);
   const { user } = useSelector(state => state.auth);
-  console.log(fanwall)
 
 	const FanwallPostScreen = () => {
     if((dareme.owner && dareme.owner.id == user.id && fanwall == null)) {

@@ -39,3 +39,13 @@ export const GetFanwallsByUser = async (userId) => {
 		console.log(err)
 	}
 }
+
+export const GetFanwallById = async (id) => {
+	try {
+		store.dispatch({ type: SET_FANWALL, payload: null });
+		const fanwall = await Firebase.GetFanwallById(id);
+		store.dispatch({ type: SET_FANWALL, payload: fanwall });
+	} catch (err) {
+		console.log(err)
+	}
+}

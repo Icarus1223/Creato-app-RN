@@ -250,3 +250,17 @@ export const GetFanwallsByUser = async (userId) => {
 	const fanwalls = await Promise.all(fanwallPromises);
 	return fanwalls;
 }
+
+export const GetFanwallById = async (fanwallId) => {
+	const fanwallRef = firestore().collection('fanwalls');
+	const fanwallSnapshot = await fanwallRef.doc(fanwallId).get();
+
+	if(fanwallSnapshot.empty) {
+		return null;
+	}
+
+	let fanwallData = { id: fanwallSnapshot.id, ...fanwallSnapshot.data() };
+  fanwallData.dareme = await GetDareMeById(fanwallData.dareme);
+
+	return fanwallData;
+}
