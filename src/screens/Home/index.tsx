@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
       {daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) !== 'Ended').length > 0 ?
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={daremes.filter((dareme) => !dareme.finished)}
+          data={daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) !== 'Ended')}
           renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}
@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
       {daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) === 'Ended').length > 0 ?
          <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
-          data={daremes.filter((dareme) => dareme.finished)}
+          data={daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) === 'Ended')}
           renderItem={renderDareMeCardItem}
           sliderWidth={width}
           itemWidth={320}

@@ -8,6 +8,7 @@ import { PrimaryButton } from "../../../components/common/Button";
 import { SET_LOADING } from "../../../redux/actionTypes";
 import { GetDareMeById } from "../../../redux/actions/daremeAction";
 import { GetFanwallByDareMeId } from "../../../redux/actions/fanwallAction";
+import CustomMoal from "../../../components/common/Modal";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
 const DareMeResultScreen = ({ navigation, route }) => {
@@ -16,12 +17,14 @@ const DareMeResultScreen = ({ navigation, route }) => {
   const { dareme } = useSelector(state => state.dareme);
   const { fanwall } = useSelector(state => state.fanwall);
   const { user } = useSelector(state => state.auth);
+  const [visible, setVisible] = useState(false);
 
 	const FanwallPostScreen = () => {
     if((dareme.owner && dareme.owner.id == user.id && fanwall == null)) {
 		  navigation.navigate('Fanwall-Post', { daremeId: id, winTitle: dareme.options[winIndex].title });
     } else {
-      navigation.navigate('Fanwall-Detail', { id: fanwall.id });
+      if(fanwall) navigation.navigate('Fanwall-Detail', { id: fanwall.id });
+      else setVisible(true);    
     }
 	}
 
@@ -146,6 +149,16 @@ const DareMeResultScreen = ({ navigation, route }) => {
           />
         </View>: null }
       </View>
+      <CustomMoal
+        visible={visible}
+        setVisible={setVisible}
+        title={"Stay tuned!"}
+      >
+        <Text style={styles.donutCount}>Creator is working on it 🎯.</Text>
+        <View style={{ marginTop: 10, justifyContent: 'center', flexDirection: 'row' }}>
+          <PrimaryButton width={200} text="Cancel" onPress={() => setVisible(false)} />
+        </View>
+      </CustomMoal>
 		</ScrollView>
 	);
 };
@@ -213,7 +226,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 10,
-  }
+  },
+  donutCount: {
+    fontSize: 16,
+    lineHeight: 20,
+    fontWeight: 400,
+    textAlign: 'center',
+    marginTop: 5,
+  },
 });
 
 export default DareMeResultScreen;

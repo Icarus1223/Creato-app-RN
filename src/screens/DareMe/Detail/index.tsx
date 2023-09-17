@@ -53,10 +53,15 @@ const DareMeDetailScreen = ({ navigation, route }) => {
   }
 
   const timeLeft = useMemo(() => {
-    if(dareme.finished) return 'Ended';
-    else {
-      if(dareme.deadline && dareme.createdAt) return LeftTime(dareme.deadline, dareme.createdAt)  
-      else return '';
+    if(dareme.finished) {
+      navigation.navigate('DareMe-Result', { id: daremeId });
+    } else {
+      if(dareme.deadline && dareme.createdAt) {
+        const time = LeftTime(dareme.deadline, dareme.createdAt);
+        if(time === 'Ended') {
+          navigation.navigate('DareMe-Result', { id: daremeId });
+        } else return time;
+      } else return '';
     }   
   }, [dareme]);
 
