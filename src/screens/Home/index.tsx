@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SET_LOADING } from "../../redux/actionTypes";
 import { GetAllDareMes } from "../../redux/actions/daremeAction";
 import { GetAllFanwalls } from "../../redux/actions/fanwallAction";
+import { LeftTime } from "../../utils/function";
 import DareMeCard from "../../components/DareMeCard";
 import FanwallCard from "../../components/FanwallCard";
 
@@ -54,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Ongoing DareMe 🙌🏻</Text>
       </View>
       <View style={styles.sectionContainer}>
-      {daremes.filter((dareme) => !dareme.finished).length > 0 ?
+      {daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) !== 'Ended').length > 0 ?
         <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={daremes.filter((dareme) => !dareme.finished)}
@@ -68,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Finished DareMe</Text>
       </View>
       <View style={styles.sectionContainer}>
-      {daremes.filter((dareme) => dareme.finished).length > 0 ?
+      {daremes.filter((dareme) => LeftTime(dareme.deadline, dareme.createdAt) === 'Ended').length > 0 ?
          <Carousel
           containerCustomStyle={{ paddingVertical: 10 }}
           data={daremes.filter((dareme) => dareme.finished)}

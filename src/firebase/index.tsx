@@ -44,12 +44,15 @@ export const CreateDareMe = async (newDareme) => {
 	if(newDareme.photos[1]) {
 		uploadFuncs.push(UploadFile(newDareme.photos[1]));
 	}
+	
+	const date = new Date();
+	const offsetInMinutes = date.getTimezoneOffset();
 
 	newDareme.photos = await Promise.all(uploadFuncs);
 
 	const dareme = {
 		...newDareme,
-		createdAt: Date.now()
+		createdAt: Date.now() + offsetInMinutes * 60 * 1000
 	}
 
 	const daremeRef = firestore().collection('daremes');
@@ -141,10 +144,13 @@ export const VoteDareOption = async (daremeId, optionIndex, voterId, amount) => 
 		return null;
 	}
 
+	const date = new Date();
+	const offsetInMinutes = date.getTimezoneOffset();
+
 	let data = daremeSnapshot.data();
 	let option = data.options[optionIndex];
 	const voteInfo = option.voteInfo ? option.voteInfo : []
-	voteInfo.push({ voter: voterId, amount: amount, votedAt: Date.now() });
+	voteInfo.push({ voter: voterId, amount: amount, votedAt: Date.now() + offsetInMinutes * 60 * 1000 });
 	option = {
 		...option,
 		voteInfo: voteInfo
@@ -169,11 +175,17 @@ export const PostFanwall = async (daremeId, userId, photo) => {
 	const fanwallUrl = await UploadFile(photo)
 	const fanwallRef = firestore().collection('fanwalls');
 
+	const daremeRef = firestore().collection('daremes');
+	await daremeRef.doc(daremeId).update({ finished: true });
+
+	const date = new Date();
+	const offsetInMinutes = date.getTimezoneOffset();
+
 	const fanwall = {
 		photo: fanwallUrl,
 		dareme: daremeId,
 		owner: userId,
-		createdAt: Date.now()
+		createdAt: Date.now() + offsetInMinutes * 60 * 1000
 	}
 
 	await fanwallRef.add(fanwall);

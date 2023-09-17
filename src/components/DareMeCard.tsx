@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from "react-native-svg";
 import Avatar from "./common/Avatar";
 import { PrimaryButton } from "./common/Button";
+import { LeftTime } from "../utils/function";
 import { DonutIconSvg, UserGroupIconSvg, NextArrowIconSvg, PreviousArrowIconSvg } from "../assets/svg";
 
 const DareMeCard = ({ data }) => {
@@ -14,29 +15,8 @@ const DareMeCard = ({ data }) => {
 	const timeLeft = useMemo(() => {
 		if(finished) return 'Ended';
 		else {
-			if(deadline && createdAt) {
-				const values = [3600 * 24, 3600, 60];
-				const units = ["day", "hour", "min"];
-				const time = values[0] * deadline + Math.round(createdAt / 1000) - Math.round(Date.now() / 1000)
-
-				if(time < 0) return 'less than 1 min left';
-
-		    const addUnit = (value, unit) => {
-		        return value.toString() + " " + (value === 1 ? unit : unit + "s");
-		    }
-
-    		let res = "";
-		    units.every((unit: string, index: number) => {
-		        const count = Math.ceil(time / values[index]);
-		        if (count >= 1) {
-		            res += addUnit(count, unit);
-		            return false;
-		        }
-		        return true;
-		    })
-		    res += ' left';
-		    return res;
-		  } else return '';
+			if(deadline && createdAt) return LeftTime(deadline, createdAt)
+			else return '';
 		} 	
 	}, [finished, deadline, createdAt]);
 
@@ -68,7 +48,7 @@ const DareMeCard = ({ data }) => {
 	}, [options]);
 
 	const DareMeHandleClick = () => {
-		navigation.navigate(finished ? 'DareMe-Result' : 'DareMe-Detail', { id: id });
+		navigation.navigate(timeLeft === 'Ended' ? 'DareMe-Result' : 'DareMe-Detail', { id: id });
 	}
 
 	const ProfileScreen = () => {
@@ -121,7 +101,7 @@ const DareMeCard = ({ data }) => {
 					<Text style={styles.titleText}>{title}</Text>
 				</View>
 				<View style={styles.buttonContainer}>
-					<PrimaryButton text={finished ? "See Results" : "See More"} width={280} onPress={DareMeHandleClick} />
+					<PrimaryButton text={timeLeft === 'Ended' ? "See Results" : "See More"} width={280} onPress={DareMeHandleClick} />
 				</View>
 			</View>
 			<View style={styles.toolContainer}>

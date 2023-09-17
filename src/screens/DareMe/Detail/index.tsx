@@ -9,6 +9,7 @@ import Avatar from "../../../components/common/Avatar";
 import { SET_LOADING, SET_OPTION } from "../../../redux/actionTypes";
 import { GetDareMeById } from "../../../redux/actions/daremeAction";
 import DareOption from "../../../components/DareOption";
+import { LeftTime } from "../../../utils/function";
 import { PrimaryButton } from "../../../components/common/Button";
 import { DonutIconSvg, UserGroupIconSvg } from "../../../assets/svg";
 
@@ -54,29 +55,8 @@ const DareMeDetailScreen = ({ navigation, route }) => {
   const timeLeft = useMemo(() => {
     if(dareme.finished) return 'Ended';
     else {
-      if(dareme.deadline && dareme.createdAt) {
-        const values = [3600 * 24, 3600, 60];
-        const units = ["day", "hour", "min"];
-        const time = values[0] * dareme.deadline + Math.round(dareme.createdAt / 1000) - Math.round(Date.now() / 1000)
-
-        if(time < 0) return 'less than 1 min left';
-
-        const addUnit = (value, unit) => {
-            return value.toString() + " " + (value === 1 ? unit : unit + "s");
-        }
-
-        let res = "";
-        units.every((unit: string, index: number) => {
-            const count = Math.ceil(time / values[index]);
-            if (count >= 1) {
-                res += addUnit(count, unit);
-                return false;
-            }
-            return true;
-        })
-        res += ' left';
-        return res;
-      } else return '';
+      if(dareme.deadline && dareme.createdAt) return LeftTime(dareme.deadline, dareme.createdAt)  
+      else return '';
     }   
   }, [dareme]);
 

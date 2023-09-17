@@ -99,7 +99,7 @@ const CreateDareMeScreen = ({ navigation }) => {
   	} else {
   		setDisabled(true);
   	}
-  }, [deadline, options, photos, title])
+  }, [deadline, options[0].title, options[1].title, photos, title])
 
 	return (
 		<ScrollView ref={scrollViewRef} vertical style={{ backgroundColor: '#FFFFFF' }}>
