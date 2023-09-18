@@ -20,7 +20,7 @@ const DareMeResultScreen = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
 
 	const FanwallPostScreen = () => {
-    if((dareme.owner && dareme.owner.id == user.id && fanwall == null)) {
+    if((dareme.owner && user && dareme.owner.id == user.id && fanwall == null)) {
 		  navigation.navigate('Fanwall-Post', { daremeId: id, winTitle: dareme.options[winIndex].title });
     } else {
       if(fanwall) navigation.navigate('Fanwall-Detail', { id: fanwall.id });
@@ -144,7 +144,7 @@ const DareMeResultScreen = ({ navigation, route }) => {
         <View style={{ marginLeft: 'auto', marginRight: 'auto'}}>
         	<PrimaryButton 
             width={280} 
-            text={(dareme.owner && dareme.owner.id == user.id && fanwall == null) ? "Post on Fanwall" : "View on Fanwall"} 
+            text={(dareme.owner && user && dareme.owner.id == user.id && fanwall == null) ? "Post on Fanwall" : "View on Fanwall"} 
             onPress={FanwallPostScreen}
           />
         </View>: null }
